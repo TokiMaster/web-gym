@@ -1,4 +1,4 @@
-package home.Todor.SOVEuprava;
+package home.Todor.OWPGym;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
