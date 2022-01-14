@@ -1,7 +1,5 @@
 package home.Todor.OWPGym.service.impl;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +22,15 @@ public class UserServiceImpl implements UserService{
 			}
 		}
 		return null;
+	}
+	
+	@Override
+	public User register(User newUser) {
+		if (userRepository.findOne(newUser.getUsername()) != null) {	
+				return null;
+		}
+		userRepository.register(newUser);
+		return newUser;
 	}
 
 }

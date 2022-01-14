@@ -64,4 +64,13 @@ public class UserRepositoryImpl implements UserRepository{
 		jdbcTemplate.query(sql, callbackHandler);
 		return callbackHandler.users;
 	}
+	
+	@Override
+	public void register(User newUser) {
+		String sql = "insert into User (username, password, email, name, surname, dateOfBirth, address, phoneNumber, registrationDate, role)"
+				+ "values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		jdbcTemplate.update(sql, newUser.getUsername(), newUser.getPassword(), 
+				newUser.getEmail(), newUser.getName(), newUser.getSurname(), newUser.getDateOfBirth(), 
+				newUser.getAddress(), newUser.getPhoneNumber(), newUser.getRegistrationDate(), newUser.getRole().name());
+	}
 }
