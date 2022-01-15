@@ -35,7 +35,7 @@ public class UserRepositoryImpl implements UserRepository{
 			String email = rs.getString(index++);
 			String name = rs.getString(index++);
 			String surname = rs.getString(index++);
-			Date dateOfBirth = rs.getTimestamp(index++);
+			LocalDateTime dateOfBirth = rs.getTimestamp(index++).toLocalDateTime();
 			String address = rs.getString(index++);
 			String phoneNumber = rs.getString(index++);
 			LocalDateTime registrationDate = rs.getTimestamp(index++).toLocalDateTime();

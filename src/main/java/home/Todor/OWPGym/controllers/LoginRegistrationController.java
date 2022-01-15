@@ -88,10 +88,10 @@ public class LoginRegistrationController {
 	}
 	
 	@PostMapping("registration")
-	public String registration(HttpSession session,
-			@RequestParam("username") String username, @RequestParam("password") String password, 
-			@RequestParam("email") String email, @RequestParam("name") String name,
-			@RequestParam("surname") String surname, @RequestParam("dateOfBirth")  @DateTimeFormat(iso = ISO.DATE) Date dateOfBirth, 
+	public String registration(HttpSession session, @RequestParam("username") String username, 
+			@RequestParam("password") String password, @RequestParam("email") String email, 
+			@RequestParam("name") String name, @RequestParam("surname") String surname, 
+			@RequestParam("dateOfBirth") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime dateOfBirth, 
 			@RequestParam("address") String address, @RequestParam("phoneNumber") String phoneNumber) {
 		
 		User loggedUser = (User)session.getAttribute("user");
@@ -113,5 +113,13 @@ public class LoginRegistrationController {
 		
 		userService.register(newUser);
 		return "redirect:/";
+	}
+	
+	@GetMapping("logout")
+	public String logout(HttpSession session) {
+		
+		session.removeAttribute("user");
+		return "redirect:/";
+		
 	}
 }

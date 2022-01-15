@@ -9,7 +9,7 @@ public class User {
 	private String email;
 	private String name;
 	private String surname;
-	private Date dateOfBirth;
+	private LocalDateTime dateOfBirth;
 	private String address;
 	private String phoneNumber;
 	private LocalDateTime registrationDate;
@@ -55,11 +55,11 @@ public class User {
 		this.surname = surname;
 	}
 	
-	public Date getDateOfBirth() {
+	public LocalDateTime getDateOfBirth() {
 		return dateOfBirth;
 	}
 	
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(LocalDateTime dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 	
@@ -99,7 +99,7 @@ public class User {
 		
 	}
 
-	public User(String username, String password, String email, String name, String surname, Date dateOfBirth,
+	public User(String username, String password, String email, String name, String surname, LocalDateTime dateOfBirth,
 			String address, String phoneNumber, LocalDateTime registrationDate, Role role) {
 		super();
 		this.username = username;

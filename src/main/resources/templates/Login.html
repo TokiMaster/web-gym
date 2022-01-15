@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <title>Login</title>
     </head>
     <body>
     <a href="registration">Registration</a>
-        <form method="post" action="/login">
+        <form method="post" th:action="@{/login}">
             <table>
                 <caption>Login</caption>
                 <tr>
@@ -23,5 +23,6 @@
                 </tr>
             </table>
         </form>
+        <a href="home">Home page</a>
 	</body>
 </html>

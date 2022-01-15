@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Home page</title>
+	</head>
+	<body>
+		<a href="login">Login</a><br>
+		<a href="registration">Register now!</a>
+		
+		<style>
+			.tb { border-collapse: collapse; }
+            .tb th, .tb td { padding: 5px; border: solid 1px #777; }
+            .tb th { background-color: lightblue; }
+		</style>
+		<table class="tb">
+			<caption>All trainings</caption>
+			<tr>
+			 	<th>Name</th>
+				<th>Instructor</th>
+				<th>Description</th>
+				<th>Type of training</th>
+				<th>Price</th>
+				<th>Training type</th>
+				<th>Training intensity</th>
+				<th>Start time</th>
+				<th>Duration</th>
+				<th>Average rating</th>
+			</tr>
+			<tr th:each="training : ${trainings}">
+				<td th:text="${training.name}"></td>
+				<td th:text="${training.instructor}"></td>
+				<td th:text="${training.description}"></td>
+				<td th:text="${training.typeOfTraining}"></td>
+				<td th:text="${training.price}"></td>
+				<td th:text="${training.trainingType}"></td>
+				<td th:text="${training.trainingLVL}"></td>
+				<td th:text="${training.startDate}"></td>
+				<td th:text="${training.duration}"></td>
+				<td th:text="${training.averageRating}"></td>
+			</tr>
+		</table>
+	</body>
+</html>
