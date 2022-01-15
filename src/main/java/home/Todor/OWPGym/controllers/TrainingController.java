@@ -18,6 +18,7 @@ public class TrainingController {
 	@Autowired
 	TrainingRepository trainingRepository;
 	
+	
 	@GetMapping
 	public String home(Model model) {
 		ArrayList<Training> trainings = trainingRepository.findAll();

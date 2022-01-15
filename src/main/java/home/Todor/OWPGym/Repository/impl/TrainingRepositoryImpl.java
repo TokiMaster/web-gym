@@ -97,4 +97,14 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 		return callbackHandler.trainings;
 	}
 	
+	@Override
+	public void addTraining(Training training) {
+		String sql = "insert into Training (name, instructor, description, typeOfTraining, price, trainingType, trainingLVL, startDate, duration, averageRating)"
+				+ "values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		jdbcTemplate.update(sql, training.getName(), training.getInstructor(), 
+				training.getDescription(), training.getTypeOfTraining().getName(), training.getPrice(), training.getTrainingType().name(), 
+				training.getTrainingLVL().name(), training.getStartDate(), training.getDuration(), training.getAverageRating());
+		
+	}
+	
 }

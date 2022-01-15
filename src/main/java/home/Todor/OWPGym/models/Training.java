@@ -16,7 +16,6 @@ public class Training {
 	private int duration;
 	private double averageRating;
 	
-	
 	public int getId() {
 		return id;
 	}
@@ -105,6 +104,21 @@ public class Training {
 		this.averageRating = averageRating;
 	}
 
+	public Training(String name, String instructor, String description, TypeOfTraining typeOfTraining, int price,
+			TrainingType trainingType, TrainingLVL trainingLVL, LocalDateTime startDate, int duration, double averageRating) {
+		super();
+		this.name = name;
+		this.instructor = instructor;
+		this.description = description;
+		this.typeOfTraining = typeOfTraining;
+		this.price = price;
+		this.trainingType = trainingType;
+		this.trainingLVL = trainingLVL;
+		this.startDate = startDate;
+		this.duration = duration;
+		this.averageRating = averageRating;
+	}
+	
 	public Training(int id, String name, String instructor, String description, TypeOfTraining typeOfTraining, int price,
 			TrainingType trainingType, TrainingLVL trainingLVL, LocalDateTime startDate, int duration, double averageRating) {
 		super();

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Registration</title>
+    </head>
+    <body>
+        <form method="post" action="addTraining">
+            <table>
+                <caption>Add training</caption>
+                <tr>
+                    <th>Name:</th>
+                    <td><input type="text" name="name" required/></td>
+                </tr>
+                <tr>
+                    <th>Instructor:</th>
+                    <td><input type="text" name="instructor" required/></td>
+                </tr>
+                <tr>
+                    <th>Description:</th>
+                    <td><textarea rows="4" cols="50" name="description" required></textarea></td>
+                </tr>
+                <tr>
+                    <th>Type of training:</th>
+                    <td><select name="typeOfTraining">
+                    		<option>Bodybuilding</option>
+                    	</select></td>
+                </tr>
+                <tr>
+                    <th>Price:</th>
+                    <td><input type="number" name="price" min="0" required/></td>
+                </tr>
+                <!-- <tr>
+                    <th>Type of training</th>
+                    <td><select name="type"><option>INDIVIDUAL</option>
+                    			<option>GROUP</option></select></td>
+                </tr>
+                <tr>
+                    <th>Training intensity</th>
+                    <td><select name="intensity"><option>AMATEUR</option>
+                    			<option>INTERMEDIATE</option>
+                    			<option>ADVANCED</option>
+                 		</select></td>
+                </tr> -->
+                <tr>
+                    <th>Start date and time:</th>
+                    <td><input type="datetime-local" name="startDate" required/></td>
+                </tr>
+                <tr>
+                    <th>Duration:</th>
+                    <td><input type="number" name="duration" min="0" required/></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><input type="submit" value="Add Training" /></td>
+                </tr>
+            </table>
+        </form>
+      	<h3 th:if="${error}">Something went wrong</h3>
+	</body>
+</html>
