@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,7 +58,7 @@ public class LoginRegistrationController {
 	
 	@PostMapping("login")
 	public String Login(@RequestParam("username") String username, @RequestParam("password") String password,
-			HttpSession session) {
+			HttpSession session, Model model) {
 		
 		User user = userService.login(username, password);
 		if (user != null) {
@@ -70,7 +71,9 @@ public class LoginRegistrationController {
 				return "redirect:/member";
 			}
 		}
-		return "LoginError.html";
+		
+		model.addAttribute("error", true);
+		return "Login.html";
 	}
 	
 	@GetMapping("registration")
@@ -92,7 +95,8 @@ public class LoginRegistrationController {
 			@RequestParam("password") String password, @RequestParam("email") String email, 
 			@RequestParam("name") String name, @RequestParam("surname") String surname, 
 			@RequestParam("dateOfBirth") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime dateOfBirth, 
-			@RequestParam("address") String address, @RequestParam("phoneNumber") String phoneNumber) {
+			@RequestParam("address") String address, @RequestParam("phoneNumber") String phoneNumber,
+			Model model) {
 		
 		User loggedUser = (User)session.getAttribute("user");
 		
@@ -108,7 +112,8 @@ public class LoginRegistrationController {
 								address, phoneNumber, LocalDateTime.now(), Role.MEMBER);
 		
 		if(userService.register(newUser) == null) {
-			return "RegistrationError.html";
+			model.addAttribute("error", true);
+			return "Registration.html";
 		}
 		
 		userService.register(newUser);

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class Training {
 
+	private int id;
 	private String name;
 	private String instructor;
 	private String description;
@@ -15,6 +16,15 @@ public class Training {
 	private int duration;
 	private double averageRating;
 	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -95,9 +105,10 @@ public class Training {
 		this.averageRating = averageRating;
 	}
 
-	public Training(String name, String instructor, String description, TypeOfTraining typeOfTraining, int price,
+	public Training(int id, String name, String instructor, String description, TypeOfTraining typeOfTraining, int price,
 			TrainingType trainingType, TrainingLVL trainingLVL, LocalDateTime startDate, int duration, double averageRating) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.instructor = instructor;
 		this.description = description;

@@ -32,6 +32,7 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 		public void processRow(ResultSet rs) throws SQLException {
 			int index = 1;
 			
+			int id = rs.getInt(index++);
 			String name = rs.getString(index++);
 			String instructor = rs.getString(index++);
 			String description = rs.getString(index++);
@@ -43,13 +44,13 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 			int duration = rs.getInt(index++);
 			double averageRating = rs.getDouble(index++);
 			
-			Training training = new Training(name, instructor, description, typeOfTraining,
+			Training training = new Training(id, name, instructor, description, typeOfTraining,
 					  price, trainingType, trainingLVL, startDate, duration, averageRating);
 			trainings.add(training);
 		}
 	}
 	
-	private class TypeRowCallbackHandler implements RowCallbackHandler {
+	private class TypeOfTrainingRowCallbackHandler implements RowCallbackHandler {
 	
 		private ArrayList<TypeOfTraining> typeOfTrainings = new ArrayList<TypeOfTraining>();
 		
@@ -67,10 +68,10 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 	}
 	
 	@Override
-	public Training findOne(String name) {
-		String sql = "select * from Training where name = ?";
+	public Training findOne(int id) {
+		String sql = "select * from Training where id = ?";
 		TrainingRowCallbackHandler callbackHandler = new TrainingRowCallbackHandler();
-		jdbcTemplate.query(sql, callbackHandler, name);
+		jdbcTemplate.query(sql, callbackHandler, id);
 		if(callbackHandler.trainings.isEmpty()) {
 			return null;
 		}
@@ -80,7 +81,7 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 	@Override
 	public TypeOfTraining findOneByTypeOfTraining(String name) {
 		String sql = "select * from TypeOfTraining where name = ?";
-		TypeRowCallbackHandler callbackHandler = new TypeRowCallbackHandler();
+		TypeOfTrainingRowCallbackHandler callbackHandler = new TypeOfTrainingRowCallbackHandler();
 		jdbcTemplate.query(sql, callbackHandler, name);
 		if(callbackHandler.typeOfTrainings.isEmpty()) {
 			return null;
