@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Edit training</title>
+	</head>
+	<body>
+		<form method="post" th:action="@{editTraining}">
+		<input type="hidden" name="id" th:value="${training.id}">
+            <table>
+                <caption>Edit training</caption>
+                <tr>
+                    <th>Name:</th>
+                    <td><input type="text" name="name" th:value="${training.name}" required/></td>
+                </tr>
+                <tr>
+                    <th>Instructor:</th>
+                    <td><input type="text" name="instructor" th:value="${training.instructor}" required/></td>
+                </tr>
+                <tr>
+                    <th>Description:</th>
+                    <td><textarea rows="4" cols="50" name="description" th:text="${training.description}" required></textarea></td>
+                </tr>
+                <tr>
+                    <th>Type of training:</th>
+                    <td><select name="typeOfTraining" th:value="${training.typeOfTraining}">
+                    		<option>Bodybuilding</option>
+                    	</select></td>
+                </tr>
+                <tr>
+                    <th>Price:</th>
+                    <td><input type="number" name="price" min="0" th:value="${training.price}" required/></td>
+                </tr>
+                <tr>
+                    <th>Type of training</th>
+                    <td><select name="type" th:value="${training.trainingType}"><option>INDIVIDUAL</option>
+                    			<option>GROUP</option></select></td>
+                </tr>
+                <tr>
+                    <th>Training intensity</th>
+                    <td><select name="intensity" th:value="${training.trainingLVL}"><option>AMATEUR</option>
+                    			<option>INTERMEDIATE</option>
+                    			<option>ADVANCED</option>
+                 		</select></td>
+                </tr>
+                <tr>
+                    <th>Start date and time:</th>
+                    <td><input type="datetime-local" name="startDate" th:value="${training.startDate}" required/></td>
+                </tr>
+                <tr>
+                    <th>Duration:</th>
+                    <td><input type="number" name="duration" min="0" th:value="${training.duration}" required/></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><input type="submit" value="Save" /></td>
+                    <td><input type="button" value="Cancel" /></td>
+                </tr>
+            </table>
+		</form>
+		<h3 th:if="${error}">Something went wrong</h3>
+	</body>
+</html>

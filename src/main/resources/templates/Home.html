@@ -21,11 +21,6 @@
 				<th>Description</th>
 				<th>Type of training</th>
 				<th>Price</th>
-				<th>Training type</th>
-				<th>Training intensity</th>
-				<th>Start time</th>
-				<th>Duration</th>
-				<th>Average rating</th>
 			</tr>
 			<tr th:each="training : ${trainings}">
 				<td th:text="${training.name}"></td>
@@ -33,11 +28,6 @@
 				<td th:text="${training.description}"></td>
 				<td th:text="${training.typeOfTraining}"></td>
 				<td th:text="${training.price}"></td>
-				<td th:text="${training.trainingType}"></td>
-				<td th:text="${training.trainingLVL}"></td>
-				<td th:text="${training.startDate}"></td>
-				<td th:text="${training.duration}"></td>
-				<td th:text="${training.averageRating}"></td>
 			</tr>
 		</table>
 	</body>

@@ -11,4 +11,5 @@ public interface TrainingRepository {
 	public TypeOfTraining findOneByTypeOfTraining(String name);	
 	public ArrayList<Training> findAll();
 	public void addTraining(Training training);
+	public void editTraining(Training training);
 }

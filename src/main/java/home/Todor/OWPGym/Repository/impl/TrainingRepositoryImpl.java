@@ -45,7 +45,7 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 			double averageRating = rs.getDouble(index++);
 			
 			Training training = new Training(id, name, instructor, description, typeOfTraining,
-					  price, trainingType, trainingLVL, startDate, duration, averageRating);
+					  	  price, trainingType, trainingLVL, startDate, duration, averageRating);
 			trainings.add(training);
 		}
 	}
@@ -99,11 +99,27 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 	
 	@Override
 	public void addTraining(Training training) {
-		String sql = "insert into Training (name, instructor, description, typeOfTraining, price, trainingType, trainingLVL, startDate, duration, averageRating)"
+		String sql = "insert into Training (name, instructor, description, typeOfTraining, price, "
+				+ "trainingType, trainingLVL, startDate, duration, averageRating)"
 				+ "values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		jdbcTemplate.update(sql, training.getName(), training.getInstructor(), 
-				training.getDescription(), training.getTypeOfTraining().getName(), training.getPrice(), training.getTrainingType().name(), 
-				training.getTrainingLVL().name(), training.getStartDate(), training.getDuration(), training.getAverageRating());
+				training.getDescription(), training.getTypeOfTraining().getName(), 
+				training.getPrice(), training.getTrainingType().name(), 
+				training.getTrainingLVL().name(), training.getStartDate(), 
+				training.getDuration(), training.getAverageRating());
+		
+	}
+	
+	@Override
+	public void editTraining(Training training) {
+		String sql = "update Training "
+				+ "set name = ?, instructor = ?, description = ?, typeOfTraining = ?, price = ?, trainingType = ?, "
+				+ "trainingLVL = ?, startDate = ?, duration = ?, averageRating = ? where id = ?";
+		jdbcTemplate.update(sql, training.getName(), training.getInstructor(), 
+				training.getDescription(), training.getTypeOfTraining().getName(), 
+				training.getPrice(), training.getTrainingType().name(), 
+				training.getTrainingLVL().name(), training.getStartDate(), 
+				training.getDuration(), training.getAverageRating(), training.getId());
 		
 	}
 	

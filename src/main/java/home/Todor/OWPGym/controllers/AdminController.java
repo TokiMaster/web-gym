@@ -52,9 +52,28 @@ public class AdminController {
 		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
 			return "redirect:/";
 		}
-//		model.addAttribute("error", true);
+		
 		return "AddTraining.html";
 	}
+	
+	@GetMapping("training")
+	public String oneTraining(@RequestParam("id") int id, Model model, HttpSession session) {
+		
+		User loggedUser = (User)session.getAttribute("user");
+		
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+		
+		Training training = trainingRepository.findOne(id);
+		if(training != null) {
+			model.addAttribute("training", training);
+			return "Training.html";
+		}
+		return "redirect:/";
+	}
+	
+	
 	
 	@PostMapping("addTraining")
 	public String addTreining(HttpSession session, @RequestParam("name") String name, 
@@ -79,8 +98,51 @@ public class AdminController {
 			return "AddTraining.html";
 		}
 		
-		trainingService.addTraining(newTraining);
+		return "redirect:/";
+	}
+	
+	@GetMapping("editTraining")
+	public String editTraining(@RequestParam("id") int id, Model model, HttpSession session) {
+		User loggedUser = (User)session.getAttribute("user");
 		
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+		
+		Training training = trainingRepository.findOne(id);
+		if(training != null) {
+			model.addAttribute("training", training);
+			return "EditTraining.html";
+		}
+		return "redirect:/";
+	}
+	
+	@PostMapping("editTraining")
+	public String editTraining(@RequestParam("id") int id, HttpSession session, @RequestParam("name") String name, 
+			@RequestParam("instructor") String instructor, @RequestParam("description") String description, 
+			@RequestParam("typeOfTraining") String typeOfTraining, @RequestParam("price") int price,
+			@RequestParam("type") String trainingType, @RequestParam("intensity") String trainingLVL,
+			@RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
+			@RequestParam("duration") int duration, Model model) {
+		
+		User loggedUser = (User)session.getAttribute("user");
+		
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+		
+		if(trainingRepository.findOne(id) != null) {
+			Training editTraining = new Training(id, name, instructor, description,
+					trainingRepository.findOneByTypeOfTraining(typeOfTraining), 
+					price, TrainingType.valueOf(trainingType), TrainingLVL.valueOf(trainingLVL),
+					startDate, duration, 4);
+			model.addAttribute("training", editTraining);
+			if (trainingService.editTraining(editTraining) == null) {
+				model.addAttribute("error", true);
+				return "EditTraining.html";
+			}
+		}
+
 		return "redirect:/";
 	}
 }
