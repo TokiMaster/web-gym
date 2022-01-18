@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>Registration</title>
+        <title>Add training</title>
     </head>
     <body>
         <form method="post" action="addTraining">
@@ -24,24 +24,31 @@
                     <th>Type of training:</th>
                     <td><select name="typeOfTraining">
                     		<option>Bodybuilding</option>
-                    	</select></td>
+                    	</select>
+                    </td>
                 </tr>
                 <tr>
                     <th>Price:</th>
                     <td><input type="number" name="price" min="0" required/></td>
                 </tr>
-                <!-- <tr>
+                <tr>
                     <th>Type of training</th>
-                    <td><select name="type"><option>INDIVIDUAL</option>
-                    			<option>GROUP</option></select></td>
+                    <td><select name="type" required>
+                    		<option disabled selected value> -- select an option -- </option>
+                    		<option>INDIVIDUAL</option>
+                    		<option>GROUP</option>
+                    	</select>
+                    </td>
                 </tr>
                 <tr>
                     <th>Training intensity</th>
-                    <td><select name="intensity"><option>AMATEUR</option>
-                    			<option>INTERMEDIATE</option>
-                    			<option>ADVANCED</option>
+                    <td><select name="intensity" required>
+	                    	<option disabled selected value> -- select an option -- </option>
+	                    	<option>AMATEUR</option>
+	                    	<option>INTERMEDIATE</option>
+	                    	<option>ADVANCED</option>
                  		</select></td>
-                </tr> -->
+                </tr>
                 <tr>
                     <th>Start date and time:</th>
                     <td><input type="datetime-local" name="startDate" required/></td>

@@ -2,6 +2,7 @@ package home.Todor.OWPGym.Repository.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -105,7 +106,7 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 		jdbcTemplate.update(sql, training.getName(), training.getInstructor(), 
 				training.getDescription(), training.getTypeOfTraining().getName(), 
 				training.getPrice(), training.getTrainingType().name(), 
-				training.getTrainingLVL().name(), training.getStartDate(), 
+				training.getTrainingLVL().name(), Timestamp.valueOf(training.getStartDate()), 
 				training.getDuration(), training.getAverageRating());
 		
 	}
@@ -118,7 +119,7 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 		jdbcTemplate.update(sql, training.getName(), training.getInstructor(), 
 				training.getDescription(), training.getTypeOfTraining().getName(), 
 				training.getPrice(), training.getTrainingType().name(), 
-				training.getTrainingLVL().name(), training.getStartDate(), 
+				training.getTrainingLVL().name(), Timestamp.valueOf(training.getStartDate()), 
 				training.getDuration(), training.getAverageRating(), training.getId());
 		
 	}

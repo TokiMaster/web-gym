@@ -2,10 +2,9 @@ package home.Todor.OWPGym.Repository.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -70,7 +69,7 @@ public class UserRepositoryImpl implements UserRepository{
 		String sql = "insert into User (username, password, email, name, surname, dateOfBirth, address, phoneNumber, registrationDate, role)"
 				+ "values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		jdbcTemplate.update(sql, newUser.getUsername(), newUser.getPassword(), 
-				newUser.getEmail(), newUser.getName(), newUser.getSurname(), newUser.getDateOfBirth(), 
+				newUser.getEmail(), newUser.getName(), newUser.getSurname(), Timestamp.valueOf(newUser.getDateOfBirth()),
 				newUser.getAddress(), newUser.getPhoneNumber(), newUser.getRegistrationDate(), newUser.getRole().name());
 	}
 }

@@ -75,11 +75,11 @@ public class AdminController {
 	}
 	
 	
-	
 	@PostMapping("addTraining")
 	public String addTreining(HttpSession session, @RequestParam("name") String name, 
 			@RequestParam("instructor") String instructor, @RequestParam("description") String description, 
 			@RequestParam("typeOfTraining") String typeOfTraining, @RequestParam("price") int price,
+			@RequestParam("type") String trainingType, @RequestParam("intensity") String trainingLVL,
 			@RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
 			@RequestParam("duration") int duration, Model model) {
 		
@@ -91,7 +91,7 @@ public class AdminController {
 		
 		Training newTraining = new Training(name, instructor, description,
 				trainingRepository.findOneByTypeOfTraining(typeOfTraining), 
-				price, TrainingType.INDIVIDUAL, TrainingLVL.INTERMEDIATE,
+				price, TrainingType.valueOf(trainingType), TrainingLVL.valueOf(trainingLVL),
 				startDate, duration, 4);
 		
 		if (trainingService.addTraining(newTraining) == null) {
