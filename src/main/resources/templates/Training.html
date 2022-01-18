@@ -14,6 +14,6 @@
 		Training intensity: <span th:text="${training.trainingLVL}"></span><br>
 		Start date and time: <span th:text="${training.startDate}"></span><br>
 		Duration: <span th:text="${training.duration}"></span><br>
-		<a th:href="@{|editTraining?id=${training.id}|}">Edit training</a>
+		<a th:if="${user.role.name == 'ADMINISTRATOR'}" th:href="@{|editTraining?id=${training.id}|}">Edit training</a>
 	</body>
 </html>

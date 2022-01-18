@@ -56,7 +56,7 @@ public class AdminController {
 		return "AddTraining.html";
 	}
 	
-	@GetMapping("training")
+	@GetMapping("trainingInfo")
 	public String oneTraining(@RequestParam("id") int id, Model model, HttpSession session) {
 		
 		User loggedUser = (User)session.getAttribute("user");
@@ -68,6 +68,7 @@ public class AdminController {
 		Training training = trainingRepository.findOne(id);
 		if(training != null) {
 			model.addAttribute("training", training);
+			model.addAttribute("user", loggedUser);
 			return "Training.html";
 		}
 		return "redirect:/";
