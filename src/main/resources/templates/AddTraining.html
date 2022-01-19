@@ -22,8 +22,9 @@
                 </tr>
                 <tr>
                     <th>Type of training:</th>
-                    <td><select name="typeOfTraining">
-                    		<option>Bodybuilding</option>
+                    <td><select  name="typeOfTraining" required>
+                    		<option disabled selected value> -- select an option -- </option>
+                    		<option th:each="type : ${typeOfTrainings}" th:text="${type.name}"></option>
                     	</select>
                     </td>
                 </tr>
@@ -47,7 +48,8 @@
 	                    	<option>AMATEUR</option>
 	                    	<option>INTERMEDIATE</option>
 	                    	<option>ADVANCED</option>
-                 		</select></td>
+                 		</select>
+                 	</td>
                 </tr>
                 <tr>
                     <th>Start date and time:</th>

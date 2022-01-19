@@ -20,6 +20,7 @@ import home.Todor.OWPGym.models.Role;
 import home.Todor.OWPGym.models.Training;
 import home.Todor.OWPGym.models.TrainingLVL;
 import home.Todor.OWPGym.models.TrainingType;
+import home.Todor.OWPGym.models.TypeOfTraining;
 import home.Todor.OWPGym.models.User;
 import home.Todor.OWPGym.service.TrainingService;
 
@@ -46,13 +47,16 @@ public class AdminController {
 	}
 	
 	@GetMapping("addTraining")
-	public String addTreining(HttpSession session) {
+	public String addTreining(HttpSession session, Model model) {
 		User loggedUser = (User)session.getAttribute("user");
 		
 		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
 			return "redirect:/";
 		}
 		
+		ArrayList<TypeOfTraining> typeOfTrainings = trainingRepository.findAllTypes();
+		model.addAttribute("typeOfTrainings", typeOfTrainings);
+		model.addAttribute("type", loggedUser);
 		return "AddTraining.html";
 	}
 	

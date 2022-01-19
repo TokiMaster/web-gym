@@ -10,6 +10,7 @@ public interface TrainingRepository {
 	public Training findOne(int id);
 	public TypeOfTraining findOneByTypeOfTraining(String name);	
 	public ArrayList<Training> findAll();
+	public ArrayList<TypeOfTraining> findAllTypes();
 	public void addTraining(Training training);
 	public void editTraining(Training training);
 }

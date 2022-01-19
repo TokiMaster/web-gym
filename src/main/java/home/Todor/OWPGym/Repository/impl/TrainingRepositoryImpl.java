@@ -99,6 +99,14 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 	}
 	
 	@Override
+	public ArrayList<TypeOfTraining> findAllTypes() {
+		String sql = "select * from TypeOfTraining";
+		TypeOfTrainingRowCallbackHandler callbackHandler = new TypeOfTrainingRowCallbackHandler();
+		jdbcTemplate.query(sql, callbackHandler);
+		return callbackHandler.typeOfTrainings;
+	}
+	
+	@Override
 	public void addTraining(Training training) {
 		String sql = "insert into Training (name, instructor, description, typeOfTraining, price, "
 				+ "trainingType, trainingLVL, startDate, duration, averageRating)"
