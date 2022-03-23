@@ -1,18 +1,16 @@
 package home.Todor.OWPGym.models;
 
-import java.time.LocalDateTime;
-
 public class Training {
 
 	private int id;
 	private String name;
 	private String instructor;
 	private String description;
+	private String photo;
 	private TypeOfTraining typeOfTraining;
 	private int price;
 	private TrainingType trainingType;
 	private TrainingLVL trainingLVL;
-	private LocalDateTime startDate;
 	private int duration;
 	private double averageRating;
 	
@@ -48,6 +46,14 @@ public class Training {
 		this.description = description;
 	}
 	
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	
 	public TypeOfTraining getTypeOfTraining() {
 		return typeOfTraining;
 	}
@@ -80,14 +86,6 @@ public class Training {
 		this.trainingLVL = trainingLVL;
 	}
 	
-	public LocalDateTime getStartDate() {
-		return startDate;
-	}
-	
-	public void setStartDate(LocalDateTime startDate) {
-		this.startDate = startDate;
-	}
-	
 	public int getDuration() {
 		return duration;
 	}
@@ -104,33 +102,33 @@ public class Training {
 		this.averageRating = averageRating;
 	}
 
-	public Training(String name, String instructor, String description, TypeOfTraining typeOfTraining, int price,
-			TrainingType trainingType, TrainingLVL trainingLVL, LocalDateTime startDate, int duration, double averageRating) {
+	public Training(String name, String instructor, String description, String photo, TypeOfTraining typeOfTraining, int price,
+			TrainingType trainingType, TrainingLVL trainingLVL, int duration, double averageRating) {
 		super();
 		this.name = name;
 		this.instructor = instructor;
 		this.description = description;
+		this.photo = photo;
 		this.typeOfTraining = typeOfTraining;
 		this.price = price;
 		this.trainingType = trainingType;
 		this.trainingLVL = trainingLVL;
-		this.startDate = startDate;
 		this.duration = duration;
 		this.averageRating = averageRating;
 	}
 	
-	public Training(int id, String name, String instructor, String description, TypeOfTraining typeOfTraining, int price,
-			TrainingType trainingType, TrainingLVL trainingLVL, LocalDateTime startDate, int duration, double averageRating) {
+	public Training(int id, String name, String instructor, String description, String photo, TypeOfTraining typeOfTraining, int price,
+			TrainingType trainingType, TrainingLVL trainingLVL, int duration, double averageRating) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.instructor = instructor;
 		this.description = description;
+		this.photo = photo;
 		this.typeOfTraining = typeOfTraining;
 		this.price = price;
 		this.trainingType = trainingType;
 		this.trainingLVL = trainingLVL;
-		this.startDate = startDate;
 		this.duration = duration;
 		this.averageRating = averageRating;
 	}

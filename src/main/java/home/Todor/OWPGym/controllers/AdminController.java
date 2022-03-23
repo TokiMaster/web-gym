@@ -1,13 +1,10 @@
 package home.Todor.OWPGym.controllers;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +42,30 @@ public class AdminController {
 		model.addAttribute("trainings", trainings);
 		return "Admin.html";
 	}
+
+	@GetMapping("profileInfo")
+	public String profileInfo(HttpSession session, Model model){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		model.addAttribute("user", loggedUser);
+		return "Profile.html";
+	}
+
+	@GetMapping("editProfile")
+	public String editProfile(HttpSession session, Model model){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		model.addAttribute("user", loggedUser);
+		return "EditProfile.html";
+	}
 	
 	@GetMapping("addTraining")
 	public String addTreining(HttpSession session, Model model) {
@@ -81,11 +102,10 @@ public class AdminController {
 	
 	@PostMapping("addTraining")
 	public String addTreining(HttpSession session, @RequestParam("name") String name, 
-			@RequestParam("instructor") String instructor, @RequestParam("description") String description, 
-			@RequestParam("typeOfTraining") String typeOfTraining, @RequestParam("price") int price,
-			@RequestParam("type") String trainingType, @RequestParam("intensity") String trainingLVL,
-			@RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
-			@RequestParam("duration") int duration, Model model) {
+			@RequestParam("instructor") String instructor, @RequestParam("description") String description,
+			@RequestParam("photo") String photo, @RequestParam("typeOfTraining") String typeOfTraining,
+			@RequestParam("price") int price,@RequestParam("type") String trainingType, 
+			@RequestParam("intensity") String trainingLVL, @RequestParam("duration") int duration, Model model) {
 		
 		User loggedUser = (User)session.getAttribute("user");
 		
@@ -93,10 +113,10 @@ public class AdminController {
 			return "redirect:/";
 		}
 		
-		Training newTraining = new Training(name, instructor, description,
+		Training newTraining = new Training(name, instructor, description, photo,
 				trainingRepository.findOneByTypeOfTraining(typeOfTraining), 
-				price, TrainingType.valueOf(trainingType), TrainingLVL.valueOf(trainingLVL),
-				startDate, duration, 4);
+				price, TrainingType.valueOf(trainingType), 
+				TrainingLVL.valueOf(trainingLVL), duration, 4);
 		
 		if (trainingService.addTraining(newTraining) == null) {
 			model.addAttribute("error", true);
@@ -125,10 +145,9 @@ public class AdminController {
 	@PostMapping("editTraining")
 	public String editTraining(@RequestParam("id") int id, HttpSession session, @RequestParam("name") String name, 
 			@RequestParam("instructor") String instructor, @RequestParam("description") String description, 
-			@RequestParam("typeOfTraining") String typeOfTraining, @RequestParam("price") int price,
-			@RequestParam("type") String trainingType, @RequestParam("intensity") String trainingLVL,
-			@RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
-			@RequestParam("duration") int duration, Model model) {
+			@RequestParam("photo") String photo, @RequestParam("typeOfTraining") String typeOfTraining, 
+			@RequestParam("price") int price, @RequestParam("type") String trainingType, 
+			@RequestParam("intensity") String trainingLVL, @RequestParam("duration") int duration, Model model) {
 		
 		User loggedUser = (User)session.getAttribute("user");
 		
@@ -137,10 +156,10 @@ public class AdminController {
 		}
 		
 		if(trainingRepository.findOne(id) != null) {
-			Training editTraining = new Training(id, name, instructor, description,
+			Training editTraining = new Training(id, name, instructor, description, photo,
 					trainingRepository.findOneByTypeOfTraining(typeOfTraining), 
-					price, TrainingType.valueOf(trainingType), TrainingLVL.valueOf(trainingLVL),
-					startDate, duration, 4);
+					price, TrainingType.valueOf(trainingType), 
+					TrainingLVL.valueOf(trainingLVL), duration, 4);
 			model.addAttribute("training", editTraining);
 			if (trainingService.editTraining(editTraining) == null) {
 				model.addAttribute("error", true);

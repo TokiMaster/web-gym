@@ -54,5 +54,29 @@ public class MemberController {
 		}
 		return "redirect:/";
 	}
-	
+
+	@GetMapping("profileInfo")
+	public String profileInfo(HttpSession session, Model model){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.MEMBER ) {
+			return "redirect:/";
+		}
+
+		model.addAttribute("user", loggedUser);
+		return "Profile.html";
+	}
+
+	@GetMapping("editProfile")
+	public String editProfile(HttpSession session, Model model){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.MEMBER ) {
+			return "redirect:/";
+		}
+
+		model.addAttribute("user", loggedUser);
+		return "EditProfile.html";
+	}
+
 }

@@ -1,7 +1,5 @@
 package home.Todor.OWPGym.service.impl;
 
-import java.time.LocalDateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,18 +15,12 @@ public class TrainingServiceImpl implements TrainingService {
 	
 	@Override
 	public Training addTraining(Training training) {
-		if(training.getStartDate().isBefore(LocalDateTime.now())) {
-			return null;
-		}
 		trainingRepository.addTraining(training);
 		return training;
 	}
 	
 	@Override
 	public Training editTraining(Training training) {
-		if(training.getStartDate().isBefore(LocalDateTime.now())) {
-			return null;
-		}
 		trainingRepository.editTraining(training);
 		return training;
 	}

@@ -37,16 +37,16 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 			String name = rs.getString(index++);
 			String instructor = rs.getString(index++);
 			String description = rs.getString(index++);
+			String photo = rs.getString(index++);
 			TypeOfTraining typeOfTraining = findOneByTypeOfTraining(rs.getString(index++));
 			int price = rs.getInt(index++);
 			TrainingType trainingType = TrainingType.valueOf(rs.getString(index++));
 			TrainingLVL trainingLVL = TrainingLVL.valueOf(rs.getString(index++));
-			LocalDateTime startDate = rs.getTimestamp(index++).toLocalDateTime();
 			int duration = rs.getInt(index++);
 			double averageRating = rs.getDouble(index++);
 			
-			Training training = new Training(id, name, instructor, description, typeOfTraining,
-					  	  price, trainingType, trainingLVL, startDate, duration, averageRating);
+			Training training = new Training(id, name, instructor, description, photo, typeOfTraining,
+					  	  price, trainingType, trainingLVL, duration, averageRating);
 			trainings.add(training);
 		}
 	}
@@ -114,8 +114,7 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 		jdbcTemplate.update(sql, training.getName(), training.getInstructor(), 
 				training.getDescription(), training.getTypeOfTraining().getName(), 
 				training.getPrice(), training.getTrainingType().name(), 
-				training.getTrainingLVL().name(), Timestamp.valueOf(training.getStartDate()), 
-				training.getDuration(), training.getAverageRating());
+				training.getTrainingLVL().name(), training.getDuration(), training.getAverageRating());
 		
 	}
 	
@@ -127,9 +126,8 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 		jdbcTemplate.update(sql, training.getName(), training.getInstructor(), 
 				training.getDescription(), training.getTypeOfTraining().getName(), 
 				training.getPrice(), training.getTrainingType().name(), 
-				training.getTrainingLVL().name(), Timestamp.valueOf(training.getStartDate()), 
-				training.getDuration(), training.getAverageRating(), training.getId());
-		
+				training.getTrainingLVL().name(), training.getDuration(), 
+				training.getAverageRating(), training.getId());
 	}
 	
 }

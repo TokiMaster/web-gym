@@ -5,7 +5,8 @@
 		<title>Admin page</title>
 	</head>
 	<body>
-	 	<a href="/logout">Logout</a>
+	 	<a href="/logout">Logout</a><br>
+		<a href="admin/profileInfo">My profile</a>
 		<style>
 			.tb { border-collapse: collapse; }
             .tb th, .tb td { padding: 5px; border: solid 1px #777; }
@@ -17,11 +18,11 @@
 			 	<th>Name</th>
 				<th>Instructor</th>
 				<th>Description</th>
+				<th>Photo</th>
 				<th>Type of training</th>
 				<th>Price</th>
 				<th>Training type</th>
 				<th>Training intensity</th>
-				<th>Start time</th>
 				<th>Duration</th>
 				<th>Average rating</th>
 			</tr>
@@ -29,11 +30,11 @@
 				<td><a th:text="${training.name}" th:href="@{|admin/trainingInfo?id=${training.id}|}"></a></td>
 				<td th:text="${training.instructor}"></td>
 				<td th:text="${training.description}"></td>
+				<td th:text="${training.photo}"></td>
 				<td th:text="${training.typeOfTraining}"></td>
 				<td th:text="${training.price}"></td>
 				<td th:text="${training.trainingType}"></td>
 				<td th:text="${training.trainingLVL}"></td>
-				<td th:text="${training.startDate}"></td>
 				<td th:text="${training.duration}"></td>
 				<td th:text="${training.averageRating}"></td>
 			</tr>

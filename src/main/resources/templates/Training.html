@@ -8,12 +8,12 @@
 		Name: <span th:text="${training.name}"></span><br>
 		Instructor: <span th:text="${training.instructor}"></span><br>
 		Description: <span th:text="${training.description}"></span><br>
+		Photo: <img th:src="${training.photo}"/><br>
 		Type of training: <span th:text="${training.typeOfTraining}"></span><br>		
 		Description: <span th:text="${training.typeOfTraining.description}"></span><br>
 		Price: <span th:text="${training.price}"></span><br>
 		Type of training: <span th:text="${training.trainingType}"></span><br>
 		Training intensity: <span th:text="${training.trainingLVL}"></span><br>
-		Start date and time: <span th:text="${training.startDate}"></span><br>
 		Duration: <span th:text="${training.duration}"></span><br>
 		<a th:if="${user.role.name == 'ADMINISTRATOR'}" th:href="@{|editTraining?id=${training.id}|}">Edit training</a>
 	</body>

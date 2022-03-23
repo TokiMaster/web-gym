@@ -22,6 +22,10 @@
                     <td><textarea rows="4" cols="50" name="description" th:text="${training.description}" required></textarea></td>
                 </tr>
                 <tr>
+                	<th>Photo:</th>
+                	<td><input type="file" name="photo" accept="photo/png, photo/jpeg" /></td>
+                </tr>
+                <tr>
                     <th>Type of training:</th>
                     <td><select name="typeOfTraining">
                     		<option th:text="${training.typeOfTraining.name}"></option>
@@ -52,10 +56,6 @@
                    			<option th:if="${training.trainingLVL.name != 'ADVANCED'}">ADVANCED</option>
                  		</select>
                  	</td>
-                </tr>
-                <tr>
-                    <th>Start date and time:</th>
-                    <td><input type="datetime-local" name="startDate" th:value="${training.startDate}" required/></td>
                 </tr>
                 <tr>
                     <th>Duration:</th>
