@@ -72,4 +72,13 @@ public class UserRepositoryImpl implements UserRepository{
 				newUser.getEmail(), newUser.getName(), newUser.getSurname(), Timestamp.valueOf(newUser.getDateOfBirth()),
 				newUser.getAddress(), newUser.getPhoneNumber(), newUser.getRegistrationDate(), newUser.getRole().name());
 	}
+
+	@Override
+	public void editUser(User user) {
+		String sql = "update User set password = ?, email = ?, name = ?,surname = ?, " +
+				"dateOfBirth = ?, address = ?, phoneNumber = ? where username = ?";
+		jdbcTemplate.update(sql, user.getPassword(), user.getEmail(), user.getName(),
+				user.getSurname(), Timestamp.valueOf(user.getDateOfBirth()),
+				user.getAddress(), user.getPhoneNumber(), user.getUsername());
+	}
 }

@@ -6,48 +6,54 @@
     <title>Edit profile</title>
 </head>
 <body>
-    <table>
-        <caption>Edit profile</caption>
-        <tr>
-            <th>Username: </th>
-            <td><input type="text" name="username" th:value="${user.username}"/></td>
-        </tr>
-        <tr>
-            <th>Email: </th>
-            <td> <input type="text" name="email" th:value="${user.email}"/></td>
-        </tr>
-        <tr>
-            <th>Name: </th>
-            <td><input type="text" name="name" th:value="${user.name}"/></td>
-        </tr>
-        <tr>
-            <th>Surname: </th>
-            <td><input type="text" name="surname" th:value="${user.surname}"/></td>
-        </tr>
-        <tr>
-            <th>Date of birth: </th>
-            <td><input type="text" name="dateOfBirth" th:value="${user.dateOfBirth}"/></td>
-        </tr>
-        <tr>
-            <th>Address:</th>
-            <td><input type="text" name="address" th:value="${user.address}"/></td>
-        </tr>
-        <tr>
-            <th>Phone number: </th>
-            <td><input type="text" name="phoneNumber" th:value="${user.phoneNumber}"/></td>
-        </tr>
-        <tr>
-            <th>Registration date: </th>
-            <td><span th:text="${user.registrationDate}"></span></td>
-        </tr>
-        <tr>
-            <th>New password: </th>
-            <td><input type="text" name="newPassword"/></td>
-        </tr>
-        <tr>
-            <th>Confirm new password</th>
-            <td><input type="text" name="repeateNewPassword"/></td>
-        </tr>
-    </table>
+    <form method="post" th:action="editProfile">
+        <table>
+            <caption>Edit profile</caption>
+
+            <tr>
+                <th>Username: </th>
+                <td><span th:text="${user.username}"></span></td>
+            </tr>
+            <tr>
+                <th>Email: </th>
+                <td> <input type="email" name="email" th:value="${user.email}"/></td>
+            </tr>
+            <tr>
+                <th>Name: </th>
+                <td><input type="text" name="name" th:value="${user.name}"/></td>
+            </tr>
+            <tr>
+                <th>Surname: </th>
+                <td><input type="text" name="surname" th:value="${user.surname}"/></td>
+            </tr>
+            <tr>
+                <th>Date of birth: </th>
+                <td><input type="datetime-local" name="dateOfBirth" th:value="${user.dateOfBirth}"/></td>
+            </tr>
+            <tr>
+                <th>Address:</th>
+                <td><input type="text" name="address" th:value="${user.address}"/></td>
+            </tr>
+            <tr>
+                <th>Phone number: </th>
+                <td><input type="text" name="phoneNumber" th:value="${user.phoneNumber}"/></td>
+            </tr>
+            <tr>
+                <th>Registration date: </th>
+                <td><span th:text="${user.registrationDate}"></span></td>
+            </tr>
+
+            <tr>
+                <th>New password: </th>
+                <td><input type="password" name="newPassword"/></td>
+            </tr>
+            <tr>
+                <th>Confirm new password: </th>
+                <td><input type="password" name="repeatNewPassword"/></td>
+            </tr>
+        </table>
+        <button type="submit">Save</button>
+    </form>
+    <h3 th:if="${error}">Something went wrong</h3>
 </body>
 </html>
