@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
+import home.Todor.OWPGym.Repository.UserRepository;
 import home.Todor.OWPGym.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -36,6 +37,9 @@ public class AdminController {
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	UserRepository userRepository;
 	
 	@GetMapping
 	public String admin(HttpSession session, Model model) {
@@ -74,8 +78,8 @@ public class AdminController {
 	}
 
 	@PostMapping("editProfile")
-	public String editProfile(HttpSession session, Model model, @RequestParam("newPassword") String password,
-		  @RequestParam("repeatNewPassword") String repeatPassword, @RequestParam("email") String email,
+	public String editProfile(HttpSession session, Model model, @RequestParam("newPassword") String newPassword,
+		  @RequestParam("repeatNewPassword") String repeatNewPassword, @RequestParam("email") String email,
 		  @RequestParam("name") String name, @RequestParam("surname") String surname,
 		  @RequestParam("dateOfBirth") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateOfBirth,
 		  @RequestParam("address") String address,@RequestParam("phoneNumber") String phoneNumber){
@@ -86,29 +90,59 @@ public class AdminController {
 			return "redirect:/";
 		}
 
-		String newPassword = loggedUser.getPassword();
+		String password = loggedUser.getPassword();
 
-		if(password != "" && repeatPassword.equals(password)){
-			newPassword = password;
+		if(newPassword != "" && repeatNewPassword.equals(newPassword)){
+			password = newPassword;
 		}else{
 			model.addAttribute("error", true);
 		}
 
 		if (userService.findOne(loggedUser.getUsername()) != null) {
-			User user = new User(loggedUser.getUsername(), newPassword, email, name, surname,
-					dateOfBirth, address, phoneNumber, loggedUser.getRegistrationDate(), loggedUser.getRole());
+			User user = new User(loggedUser.getUsername(), password, email, name, surname,
+					dateOfBirth, address, phoneNumber, loggedUser.getRegistrationDate(),
+					loggedUser.getRole(), loggedUser.isBlocked());
 			model.addAttribute("user", user);
 			if(userService.editUser(user) == null){
 				model.addAttribute("error", true);
 				return "EditProfile.html";
 			}
 		}
-
 		return "redirect:/";
 	}
-	
+
+	@GetMapping("allUsers")
+	public String allUsers(HttpSession session, Model model){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		ArrayList<User> users = userRepository.findAll();
+		model.addAttribute("users", users);
+
+		return "AllUsers.html";
+	}
+
+	@GetMapping("allUsers/userInfo")
+	public String userInfo(@RequestParam("id") String username, Model model, HttpSession session){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		User user = userRepository.findOne(username);
+		if(user != null){
+			model.addAttribute("user", user);
+			return "User.html";
+		}
+		return "redirect:/";
+	}
+
 	@GetMapping("addTraining")
-	public String addTreining(HttpSession session, Model model) {
+	public String addTraining(HttpSession session, Model model) {
 		User loggedUser = (User)session.getAttribute("user");
 		
 		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
@@ -162,7 +196,6 @@ public class AdminController {
 			model.addAttribute("error", true);
 			return "AddTraining.html";
 		}
-		
 		return "redirect:/";
 	}
 	
@@ -206,7 +239,6 @@ public class AdminController {
 				return "EditTraining.html";
 			}
 		}
-
 		return "redirect:/";
 	}
 }

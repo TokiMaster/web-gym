@@ -1,10 +1,8 @@
 package home.Todor.OWPGym.controllers;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
-import javax.servlet.http.HttpSession;
-
+import home.Todor.OWPGym.models.Role;
+import home.Todor.OWPGym.models.User;
+import home.Todor.OWPGym.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -15,10 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import home.Todor.OWPGym.Repository.UserRepository;
-import home.Todor.OWPGym.models.Role;
-import home.Todor.OWPGym.models.User;
-import home.Todor.OWPGym.service.UserService;
+import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/")
@@ -46,11 +42,7 @@ public class LoginRegistrationController {
 		User loggedUser = (User)session.getAttribute("user");
 		
 		if(loggedUser != null) {
-			if(loggedUser.getRole() == Role.ADMINISTRATOR) {
-				return "redirect:/admin";
-			}else {
-				return "redirect:/member";
-			}
+			return "redirect:/";
 		}
 		return "Login.html";
 	}
@@ -59,7 +51,13 @@ public class LoginRegistrationController {
 	@PostMapping("login")
 	public String Login(@RequestParam("username") String username, @RequestParam("password") String password,
 			HttpSession session, Model model) {
-		
+
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser != null) {
+			return "redirect:/";
+		}
+
 		User user = userService.login(username, password);
 		if (user != null) {
 			if (user.getRole().equals(Role.ADMINISTRATOR)) {
@@ -71,7 +69,7 @@ public class LoginRegistrationController {
 				return "redirect:/member";
 			}
 		}
-		
+
 		model.addAttribute("error", true);
 		return "Login.html";
 	}
@@ -79,13 +77,9 @@ public class LoginRegistrationController {
 	@GetMapping("registration")
 	public String registrationForm(HttpSession session) {
 		User loggedUser = (User)session.getAttribute("user");
-		
+
 		if(loggedUser != null) {
-			if(loggedUser.getRole() == Role.ADMINISTRATOR) {
-				return "redirect:/admin";
-			}else {
-				return "redirect:/member";
-			}
+			return "redirect:/";
 		}
 		return "Registration.html";
 	}
@@ -109,22 +103,19 @@ public class LoginRegistrationController {
 		}
 		
 		User newUser = new User(username, password, email, name, surname, dateOfBirth, 
-								address, phoneNumber, LocalDateTime.now(), Role.MEMBER);
+								address, phoneNumber, LocalDateTime.now(), Role.MEMBER, false);
 		
 		if(userService.register(newUser) == null) {
 			model.addAttribute("error", true);
 			return "Registration.html";
 		}
-		
-		userService.register(newUser);
+
 		return "redirect:/";
 	}
 	
 	@GetMapping("logout")
 	public String logout(HttpSession session) {
-		
 		session.removeAttribute("user");
 		return "redirect:/";
-		
 	}
 }

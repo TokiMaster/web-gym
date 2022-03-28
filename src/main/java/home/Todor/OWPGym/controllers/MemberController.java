@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import home.Todor.OWPGym.Repository.TrainingRepository;
 import home.Todor.OWPGym.models.Role;
@@ -87,8 +84,8 @@ public class MemberController {
 	}
 
 	@PostMapping("editProfile")
-	public String editProfile(HttpSession session, Model model, @RequestParam("newPassword") String password,
-		  @RequestParam("repeatNewPassword") String repeatPassword, @RequestParam("email") String email,
+	public String editProfile(HttpSession session, Model model, @RequestParam("newPassword") String newPassword,
+		  @RequestParam("repeatNewPassword") String repeatNewPassword, @RequestParam("email") String email,
 		  @RequestParam("name") String name, @RequestParam("surname") String surname,
 		  @RequestParam("dateOfBirth") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateOfBirth,
 		  @RequestParam("address") String address,@RequestParam("phoneNumber") String phoneNumber){
@@ -99,25 +96,25 @@ public class MemberController {
 			return "redirect:/";
 		}
 
-		String newPassword = loggedUser.getPassword();
+		String password = loggedUser.getPassword();
+		model.addAttribute("user", userService.findOne(loggedUser.getUsername()));
 
-		if(password != "" && repeatPassword.equals(password)){
-			newPassword = password;
+		if(newPassword != "" && repeatNewPassword.equals(newPassword)){
+			password = newPassword;
 		}else{
 			model.addAttribute("error", true);
+			return "EditProfile.html";
 		}
 
 		if (userService.findOne(loggedUser.getUsername()) != null) {
-			User user = new User(loggedUser.getUsername(), newPassword, email, name, surname,
-					dateOfBirth, address, phoneNumber, loggedUser.getRegistrationDate(), loggedUser.getRole());
-			model.addAttribute("user", user);
+			User user = new User(loggedUser.getUsername(), password, email, name, surname,
+					dateOfBirth, address, phoneNumber, loggedUser.getRegistrationDate(),
+					loggedUser.getRole(), loggedUser.isBlocked());
 			if(userService.editUser(user) == null){
 				model.addAttribute("error", true);
 				return "EditProfile.html";
 			}
 		}
-
 		return "redirect:/";
 	}
-
 }

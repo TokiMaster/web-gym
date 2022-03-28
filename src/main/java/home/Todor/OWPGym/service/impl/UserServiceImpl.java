@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService{
 	public User login(String username, String password) {
 		User user = userRepository.findOne(username);
 		if (user != null) {
-			if(user.getPassword().equals(password)) {
+			if(user.getPassword().equals(password) && !user.isBlocked()) {
 				return user;
 			}
 		}

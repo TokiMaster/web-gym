@@ -1,7 +1,6 @@
 package home.Todor.OWPGym.models;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class User {
 	private String username;
@@ -14,6 +13,8 @@ public class User {
 	private String phoneNumber;
 	private LocalDateTime registrationDate;
 	private Role role;
+
+	private boolean isBlocked;
 	
 	public String getUsername() {
 		return username;
@@ -94,13 +95,21 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	
+
+	public boolean isBlocked() {
+		return isBlocked;
+	}
+
+	public void setBlocked(boolean blocked) {
+		isBlocked = blocked;
+	}
+
 	public User() {
 		
 	}
 
 	public User(String username, String password, String email, String name, String surname, LocalDateTime dateOfBirth,
-			String address, String phoneNumber, LocalDateTime registrationDate, Role role) {
+			String address, String phoneNumber, LocalDateTime registrationDate, Role role, Boolean isBlocked) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -112,6 +121,7 @@ public class User {
 		this.phoneNumber = phoneNumber;
 		this.registrationDate = registrationDate;
 		this.role = role;
+		this.isBlocked = isBlocked;
 	}
 
 	@Override
@@ -119,6 +129,4 @@ public class User {
 		// TODO Auto-generated method stub
 		return super.toString();
 	}
-	
-	
 }

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit user</title>
+</head>
+<body>
+    Username: <span th:text="${user.username}"></span><br>
+    Email: <span th:text="${user.email}"></span><br>
+    Name: <span th:text="${user.name}"></span><br>
+    Surname: <span th:text="${user.surname}"></span><br>
+    Date of birth: <span th:text="${user.dateOfBirth}"></span><br>
+    Address: <span th:text="${user.address}"></span><br>
+    Phone number: <span th:text="${user.phoneNumber}"></span><br>
+    Registration date: <span th:text="${user.registrationDate}"></span><br>
+    Role: <span th:text="${user.role.name}"></span>
+</body>
+</html>

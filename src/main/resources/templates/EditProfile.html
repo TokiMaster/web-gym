@@ -6,7 +6,7 @@
     <title>Edit profile</title>
 </head>
 <body>
-    <form method="post" th:action="editProfile">
+    <form method="post" th:action="@{editProfile}">
         <table>
             <caption>Edit profile</caption>
 
@@ -42,7 +42,6 @@
                 <th>Registration date: </th>
                 <td><span th:text="${user.registrationDate}"></span></td>
             </tr>
-
             <tr>
                 <th>New password: </th>
                 <td><input type="password" name="newPassword"/></td>

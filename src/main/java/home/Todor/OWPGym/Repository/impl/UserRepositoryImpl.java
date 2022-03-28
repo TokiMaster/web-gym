@@ -39,8 +39,10 @@ public class UserRepositoryImpl implements UserRepository{
 			String phoneNumber = rs.getString(index++);
 			LocalDateTime registrationDate = rs.getTimestamp(index++).toLocalDateTime();
 			Role role = Role.valueOf(rs.getString(index++));
+			Boolean isBlocked = rs.getBoolean(index++);
 			
-			User user = new User(username, password, email, name, surname, dateOfBirth, address, phoneNumber, registrationDate, role);
+			User user = new User(username, password, email, name, surname, dateOfBirth,
+					address, phoneNumber, registrationDate, role, isBlocked);
 			users.add(user);
 		}
 	}
@@ -66,11 +68,13 @@ public class UserRepositoryImpl implements UserRepository{
 	
 	@Override
 	public void register(User newUser) {
-		String sql = "insert into User (username, password, email, name, surname, dateOfBirth, address, phoneNumber, registrationDate, role)"
+		String sql = "insert into User (username, password, email, name, surname, " +
+				"dateOfBirth, address, phoneNumber, registrationDate, role, isBlocked)"
 				+ "values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		jdbcTemplate.update(sql, newUser.getUsername(), newUser.getPassword(), 
 				newUser.getEmail(), newUser.getName(), newUser.getSurname(), Timestamp.valueOf(newUser.getDateOfBirth()),
-				newUser.getAddress(), newUser.getPhoneNumber(), newUser.getRegistrationDate(), newUser.getRole().name());
+				newUser.getAddress(), newUser.getPhoneNumber(), newUser.getRegistrationDate(), newUser.getRole().name(),
+				newUser.isBlocked());
 	}
 
 	@Override

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All users</title>
+</head>
+<body>
+<style>
+    .tb { border-collapse: collapse; }
+    .tb th, .tb td { padding: 5px; border: solid 1px #777; }
+    .tb th { background-color: lightblue; }
+</style>
+<table class="tb">
+    <caption>All users</caption>
+    <tr>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Registration date</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td><a th:text="${user.username}" th:href="@{|allUsers/userInfo?id=${user.username}|}"></a></td>
+        <td th:text="${user.role.name}"></td>
+        <td th:text="${user.registrationDate}"></td>
+    </tr>
+</table>
+</body>
+</html>
