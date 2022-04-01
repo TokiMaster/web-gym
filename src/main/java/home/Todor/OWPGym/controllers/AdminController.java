@@ -141,6 +141,54 @@ public class AdminController {
 		return "redirect:/";
 	}
 
+	@GetMapping("allUsers/editUser")
+	public String editUser(HttpSession session, Model model, @RequestParam("id") String username){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		User user = userRepository.findOne(username);
+		if(user != null){
+			model.addAttribute("user", user);
+			return "EditUser.html";
+		}
+
+		return "redirect:/";
+	}
+
+	@PostMapping("allUsers/editUser")
+	public String editUser(HttpSession session, Model model, @RequestParam("username") String username,
+						   @RequestParam("role") Role role, @RequestParam(value = "block", required = false) Boolean isBlocked){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		User editUser = userService.findOne(username);
+
+		boolean block = editUser.isBlocked();
+
+		if(isBlocked != null){
+			block = true;
+		}
+
+		if (editUser != null) {
+			User user = new User(username, editUser.getPassword(), editUser.getEmail(),
+					editUser.getName(), editUser.getSurname(), editUser.getDateOfBirth(),
+					editUser.getAddress(), editUser.getPhoneNumber(), editUser.getRegistrationDate(),
+					role, block);
+			model.addAttribute("user", user);
+			if(userService.editUser(user) == null){
+				model.addAttribute("error", true);
+				return "EditUser.html";
+			}
+		}
+		return "redirect:/";
+	}
+
 	@GetMapping("addTraining")
 	public String addTraining(HttpSession session, Model model) {
 		User loggedUser = (User)session.getAttribute("user");

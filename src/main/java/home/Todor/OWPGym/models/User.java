@@ -13,7 +13,6 @@ public class User {
 	private String phoneNumber;
 	private LocalDateTime registrationDate;
 	private Role role;
-
 	private boolean isBlocked;
 	
 	public String getUsername() {

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit user</title>
+    <title>User details</title>
 </head>
 <body>
     Username: <span th:text="${user.username}"></span><br>
@@ -13,6 +13,7 @@
     Address: <span th:text="${user.address}"></span><br>
     Phone number: <span th:text="${user.phoneNumber}"></span><br>
     Registration date: <span th:text="${user.registrationDate}"></span><br>
-    Role: <span th:text="${user.role.name}"></span>
+    Role: <span th:text="${user.role.name}"></span><br>
+    <a th:href="@{|editUser?id=${user.username}|}">Edit user</a>
 </body>
 </html>

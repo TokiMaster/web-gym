@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit user</title>
+</head>
+<body>
+<style>
+    .tb { border-collapse: collapse; }
+    .tb th, .tb td { padding: 5px; border: solid 1px #777; }
+    .tb th { background-color: lightblue; }
+</style>
+<form method="post" th:action="@{editUser}">
+    <table class="tb">
+        <caption>Edit user</caption>
+        <tr>
+            <th>Username: </th>
+            <td><span th:text="${user.username}"></span><input type="hidden" name="username" th:value="${user.username}"/></td>
+        </tr>
+        <tr>
+            <th>Registration date: </th>
+            <td><span th:text="${user.registrationDate}"></span></td>
+        </tr>
+        <tr>
+            <th>Role: </th>
+            <td><select name="role" >
+                <option th:text="${user.role.name}"></option>
+                <option th:if="${user.role.name != 'MEMBER'}">MEMBER</option>
+                <option th:if="${user.role.name != 'ADMINISTRATOR'}">ADMINISTRATOR</option>
+            </select></td>
+        </tr>
+        <tr>
+            <th>Block user: </th>
+            <td><input type="checkbox" name="block" th:value="${user.isBlocked}" /></td>
+        </tr>
+        <tr>
+            <th></th>
+            <td><button type="submit">Save</button></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

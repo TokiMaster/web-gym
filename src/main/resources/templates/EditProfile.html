@@ -6,10 +6,14 @@
     <title>Edit profile</title>
 </head>
 <body>
+    <style>
+        .tb { border-collapse: collapse; }
+        .tb th, .tb td { padding: 5px; border: solid 1px #777; }
+        .tb th { background-color: lightblue; }
+    </style>
     <form method="post" th:action="@{editProfile}">
-        <table>
+        <table class="tb">
             <caption>Edit profile</caption>
-
             <tr>
                 <th>Username: </th>
                 <td><span th:text="${user.username}"></span></td>

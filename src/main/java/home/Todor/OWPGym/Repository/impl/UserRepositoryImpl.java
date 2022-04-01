@@ -49,7 +49,7 @@ public class UserRepositoryImpl implements UserRepository{
 	
 	@Override
 	public User findOne(String username) {
-		String sql = "select * from User where username = ?";
+		String sql = "select * from User where username = ? and isBlocked = 0";
 		UserRowCallbackHandler callbackHandler = new UserRowCallbackHandler();
 		jdbcTemplate.query(sql, callbackHandler, username);
 		if(callbackHandler.users.isEmpty()) {
@@ -57,10 +57,10 @@ public class UserRepositoryImpl implements UserRepository{
 		}
 		return callbackHandler.users.get(0);
 	}
-	
+
 	@Override
 	public ArrayList<User> findAll() {
-		String sql = "select * from User";
+		String sql = "select * from User where isBlocked = 0";
 		UserRowCallbackHandler callbackHandler = new UserRowCallbackHandler();
 		jdbcTemplate.query(sql, callbackHandler);
 		return callbackHandler.users;
@@ -80,9 +80,10 @@ public class UserRepositoryImpl implements UserRepository{
 	@Override
 	public void editUser(User user) {
 		String sql = "update User set password = ?, email = ?, name = ?,surname = ?, " +
-				"dateOfBirth = ?, address = ?, phoneNumber = ? where username = ?";
+				"dateOfBirth = ?, address = ?, phoneNumber = ?, role = ?, isBlocked = ? where username = ?";
 		jdbcTemplate.update(sql, user.getPassword(), user.getEmail(), user.getName(),
 				user.getSurname(), Timestamp.valueOf(user.getDateOfBirth()),
-				user.getAddress(), user.getPhoneNumber(), user.getUsername());
+				user.getAddress(), user.getPhoneNumber(), user.getRole().name(),
+				user.isBlocked(), user.getUsername());
 	}
 }
