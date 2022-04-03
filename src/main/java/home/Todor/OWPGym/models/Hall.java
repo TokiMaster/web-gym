@@ -5,11 +5,11 @@ public class Hall {
     private String hallName;
     private int capacity;
 
-    public String gethallName() {
+    public String getHallName() {
         return hallName;
     }
 
-    public void sethallName(String hallName) {
+    public void setHallName(String hallName) {
         this.hallName = hallName;
     }
 

@@ -56,6 +56,6 @@ public class HallRepositoryImpl implements HallRepository {
     @Override
     public void addHall(Hall hall) {
         String sql = "insert into Hall(hallName, capacity) values (?,?)";
-        jdbcTemplate.update(sql, hall.gethallName(), hall.getCapacity());
+        jdbcTemplate.update(sql, hall.getHallName(), hall.getCapacity());
     }
 }

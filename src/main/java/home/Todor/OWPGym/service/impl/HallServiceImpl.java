@@ -14,7 +14,7 @@ public class HallServiceImpl implements HallService {
 
     @Override
     public Hall addHall(Hall hall) {
-        if(hallRepository.findOne(hall.gethallName()) != null || hall.gethallName().equals("")
+        if(hallRepository.findOne(hall.getHallName()) != null || hall.getHallName().equals("")
         || hall.getCapacity() < 1){
             return null;
         }
