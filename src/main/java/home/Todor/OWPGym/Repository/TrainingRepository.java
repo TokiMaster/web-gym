@@ -6,11 +6,10 @@ import home.Todor.OWPGym.models.Training;
 import home.Todor.OWPGym.models.TypeOfTraining;
 
 public interface TrainingRepository {
-
-	public Training findOne(int id);
-	public TypeOfTraining findOneByTypeOfTraining(String name);	
-	public ArrayList<Training> findAll();
-	public ArrayList<TypeOfTraining> findAllTypes();
-	public void addTraining(Training training);
-	public void editTraining(Training training);
+	Training findOne(int id);
+	TypeOfTraining findOneByTypeOfTraining(String name);
+	ArrayList<Training> findAll();
+	ArrayList<TypeOfTraining> findAllTypes();
+	void addTraining(Training training);
+	void editTraining(Training training);
 }

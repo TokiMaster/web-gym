@@ -6,9 +6,8 @@ import java.util.ArrayList;
 import home.Todor.OWPGym.models.User;
 
 public interface UserRepository {
-
-	public User findOne(String username);
-	public ArrayList<User> findAll();
-	public void register(User newUser);
-	public void editUser(User user);
+	User findOne(String username);
+	ArrayList<User> findAll();
+	void register(User newUser);
+	void editUser(User user);
 }

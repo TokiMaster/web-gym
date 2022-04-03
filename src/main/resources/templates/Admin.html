@@ -7,7 +7,8 @@
 	<body>
 	 	<a href="/logout">Logout</a><br>
 		<a href="admin/profileInfo">My profile</a><br>
-		<a href="admin/allUsers">All users</a>
+		<a href="admin/allUsers">All users</a><br>
+		<a href="admin/allHalls">All halls</a>
 		<style>
 			.tb { border-collapse: collapse; }
             .tb th, .tb td { padding: 5px; border: solid 1px #777; }
@@ -40,6 +41,7 @@
 				<td th:text="${training.averageRating}"></td>
 			</tr>
 		</table>
-		<a href="admin/addTraining">Add new training</a>
+		<br><a href="admin/addTraining">Add new training</a>
+		<br><a href="admin/addHall">Add new hall</a>
 	</body>
 </html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add hall</title>
+</head>
+<body>
+<form method="post" th:action="@{addHall}">
+    <table>
+        <tr>
+            <th>Hall name: </th>
+            <td><input type="text" name="hallName" required></td>
+        </tr>
+        <tr>
+            <th>Capacity: </th>
+            <td><input type="number" min="1" name="capacity" required></td>
+        </tr>
+    </table>
+    <button type="submit">Add hall</button>
+</form>
+<h3 th:if="${error}">Something went wrong</h3>
+</body>
+</html>

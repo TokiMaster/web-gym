@@ -112,10 +112,10 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 				+ "trainingType, trainingLVL, startDate, duration, averageRating)"
 				+ "values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		jdbcTemplate.update(sql, training.getName(), training.getInstructor(), 
-				training.getDescription(), training.getTypeOfTraining().getName(), 
-				training.getPrice(), training.getTrainingType().name(), 
-				training.getTrainingLVL().name(), training.getDuration(), training.getAverageRating());
-		
+					training.getDescription(), training.getTypeOfTraining().getName(),
+					training.getPrice(), training.getTrainingType().name(),
+					training.getTrainingLVL().name(), training.getDuration(),
+					training.getAverageRating());
 	}
 	
 	@Override
@@ -124,9 +124,9 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 				+ "set name = ?, instructor = ?, description = ?, typeOfTraining = ?, price = ?, trainingType = ?, "
 				+ "trainingLVL = ?, startDate = ?, duration = ?, averageRating = ? where id = ?";
 		jdbcTemplate.update(sql, training.getName(), training.getInstructor(), 
-				training.getDescription(), training.getTypeOfTraining().getName(), 
-				training.getPrice(), training.getTrainingType().name(), 
-				training.getTrainingLVL().name(), training.getDuration(), 
+				training.getDescription(), training.getTypeOfTraining().getName(),
+				training.getPrice(), training.getTrainingType().name(),
+				training.getTrainingLVL().name(), training.getDuration(),
 				training.getAverageRating(), training.getId());
 	}
 	

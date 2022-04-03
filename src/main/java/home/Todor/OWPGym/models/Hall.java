@@ -1,8 +1,9 @@
 package home.Todor.OWPGym.models;
 
 public class Hall {
+
     private String hallName;
-    private String capacity;
+    private int capacity;
 
     public String gethallName() {
         return hallName;
@@ -12,19 +13,15 @@ public class Hall {
         this.hallName = hallName;
     }
 
-    public String getCapacity() {
+    public int getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(String capacity) {
+    public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 
-    public Hall(){
-        
-    }
-
-    public Hall(String hallName, String capacity) {
+    public Hall(String hallName, int capacity) {
         this.hallName = hallName;
         this.capacity = capacity;
     }
