@@ -21,4 +21,13 @@ public class HallServiceImpl implements HallService {
         hallRepository.addHall(hall);
         return hall;
     }
+
+    @Override
+    public Hall editHall(Hall hall) {
+        if (hall.getCapacity() < 1) {
+            return null;
+        }
+        hallRepository.editHall(hall);
+        return hall;
+    }
 }

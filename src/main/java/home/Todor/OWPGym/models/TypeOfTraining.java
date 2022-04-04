@@ -20,10 +20,6 @@ public class TypeOfTraining {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public TypeOfTraining() {
-		
-	}
 	
 	public TypeOfTraining(String name, String description) {
 		super();

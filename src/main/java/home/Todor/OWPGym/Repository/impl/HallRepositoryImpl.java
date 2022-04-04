@@ -2,7 +2,6 @@ package home.Todor.OWPGym.Repository.impl;
 
 import home.Todor.OWPGym.Repository.HallRepository;
 import home.Todor.OWPGym.models.Hall;
-import home.Todor.OWPGym.models.TypeOfTraining;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
@@ -57,5 +56,11 @@ public class HallRepositoryImpl implements HallRepository {
     public void addHall(Hall hall) {
         String sql = "insert into Hall(hallName, capacity) values (?,?)";
         jdbcTemplate.update(sql, hall.getHallName(), hall.getCapacity());
+    }
+
+    @Override
+    public void editHall(Hall hall) {
+        String sql = "update Hall set capacity = ? where hallName = ?";
+        jdbcTemplate.update(sql, hall.getCapacity(),hall.getHallName());
     }
 }

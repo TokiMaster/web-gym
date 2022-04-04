@@ -54,8 +54,11 @@
                 <th>Confirm new password: </th>
                 <td><input type="password" name="repeatNewPassword"/></td>
             </tr>
+            <tr>
+                <th></th>
+                <td><input type="submit" value="Save" /></td>
+            </tr>
         </table>
-        <button type="submit">Save</button>
     </form>
     <h3 th:if="${error}">Something went wrong</h3>
 </body>

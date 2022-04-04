@@ -34,7 +34,12 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public User register(User newUser) {
-		if (userRepository.findOne(newUser.getUsername()) != null) {	
+		if (userRepository.findOne(newUser.getUsername()) != null
+			|| !isValidEmail(newUser.getEmail()) || newUser.getPassword().equals("")
+			|| newUser.getEmail().equals("") || newUser.getName().equals("")
+			|| newUser.getSurname().equals("")
+			|| newUser.getDateOfBirth().isAfter(LocalDateTime.of(2008,12,31,23,59))
+			|| newUser.getPhoneNumber().equals("")) {
 				return null;
 		}
 		userRepository.register(newUser);
@@ -43,7 +48,13 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User editUser(User user) {
-		if(!isValidEmail(user.getEmail()) || user.getDateOfBirth().isAfter(LocalDateTime.now())){
+		if(!isValidEmail(user.getEmail())
+		|| user.getEmail().equals("")
+		|| user.getName().equals("")
+		|| user.getSurname().equals("")
+		|| user.getAddress().equals("")
+		|| user.getDateOfBirth().isAfter(LocalDateTime.of(2008,12,31,23,59))
+		|| user.getPhoneNumber().equals("")){
 			return null;
 		}
 		userRepository.editUser(user);

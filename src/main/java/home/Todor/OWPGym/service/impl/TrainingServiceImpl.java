@@ -15,12 +15,21 @@ public class TrainingServiceImpl implements TrainingService {
 	
 	@Override
 	public Training addTraining(Training training) {
+		if(training.getName().equals("") || training.getInstructor().equals("")
+				|| training.getDescription().equals("") || training.getPrice() < 1){
+			return null;
+		}
 		trainingRepository.addTraining(training);
 		return training;
 	}
 	
 	@Override
 	public Training editTraining(Training training) {
+		if(training.getName().equals("") || training.getInstructor().equals("")
+		|| training.getDescription().equals("") || training.getPrice() < 1
+		|| training.getDuration() < 1){
+			return null;
+		}
 		trainingRepository.editTraining(training);
 		return training;
 	}

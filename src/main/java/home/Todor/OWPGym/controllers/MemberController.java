@@ -67,7 +67,7 @@ public class MemberController {
 			return "redirect:/";
 		}
 
-		model.addAttribute("user", loggedUser);
+		model.addAttribute("user", userService.findOne(loggedUser.getUsername()));
 		return "Profile.html";
 	}
 
@@ -79,7 +79,7 @@ public class MemberController {
 			return "redirect:/";
 		}
 
-		model.addAttribute("user", loggedUser);
+		model.addAttribute("user", userService.findOne(loggedUser.getUsername()));
 		return "EditProfile.html";
 	}
 
@@ -97,19 +97,18 @@ public class MemberController {
 		}
 
 		String password = loggedUser.getPassword();
-		model.addAttribute("user", userService.findOne(loggedUser.getUsername()));
 
 		if(newPassword != "" && repeatNewPassword.equals(newPassword)){
 			password = newPassword;
 		}else{
 			model.addAttribute("error", true);
-			return "EditProfile.html";
 		}
 
 		if (userService.findOne(loggedUser.getUsername()) != null) {
 			User user = new User(loggedUser.getUsername(), password, email, name, surname,
 					dateOfBirth, address, phoneNumber, loggedUser.getRegistrationDate(),
 					loggedUser.getRole(), loggedUser.isBlocked());
+			model.addAttribute("user", user);
 			if(userService.editUser(user) == null){
 				model.addAttribute("error", true);
 				return "EditProfile.html";

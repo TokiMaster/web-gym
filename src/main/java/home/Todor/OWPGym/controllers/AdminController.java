@@ -64,7 +64,7 @@ public class AdminController {
 			return "redirect:/";
 		}
 
-		model.addAttribute("user", loggedUser);
+		model.addAttribute("user", userService.findOne(loggedUser.getUsername()));
 		return "Profile.html";
 	}
 
@@ -76,7 +76,7 @@ public class AdminController {
 			return "redirect:/";
 		}
 
-		model.addAttribute("user", loggedUser);
+		model.addAttribute("user",  userService.findOne(loggedUser.getUsername()));
 		return "EditProfile.html";
 	}
 
@@ -302,6 +302,39 @@ public class AdminController {
 		ArrayList<Hall> halls = hallRepository.findAll();
 		model.addAttribute("halls", halls);
 		return "Halls.html";
+	}
+
+	@GetMapping("allHalls/editHall")
+	public String editHall(HttpSession session, Model model, @RequestParam("id") String hallName){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		Hall hall = hallRepository.findOne(hallName);
+		if(hall != null){
+			model.addAttribute("hall", hall);
+			return "EditHall.html";
+		}
+		return "redirect:/";
+	}
+
+	@PostMapping("allHalls/editHall")
+	public String editHall(HttpSession session, Model model, @RequestParam("hallName") String hallName,
+						   @RequestParam("capacity") int capacity){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		if(hallService.editHall(new Hall(hallName, capacity)) == null){
+			model.addAttribute("error", true);
+			return "EditHall.html";
+		}
+
+		return "redirect:/";
 	}
 
 	@GetMapping("addHall")

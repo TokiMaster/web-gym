@@ -8,4 +8,5 @@ public interface HallRepository {
     Hall findOne(String hallName);
     ArrayList<Hall> findAll();
     void addHall(Hall hall);
+    void editHall(Hall hall);
 }

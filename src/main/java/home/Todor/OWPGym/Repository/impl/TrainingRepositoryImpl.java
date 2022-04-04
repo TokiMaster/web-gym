@@ -122,7 +122,7 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 	public void editTraining(Training training) {
 		String sql = "update Training "
 				+ "set name = ?, instructor = ?, description = ?, typeOfTraining = ?, price = ?, trainingType = ?, "
-				+ "trainingLVL = ?, startDate = ?, duration = ?, averageRating = ? where id = ?";
+				+ "trainingLVL = ?, duration = ?, averageRating = ? where id = ?";
 		jdbcTemplate.update(sql, training.getName(), training.getInstructor(), 
 				training.getDescription(), training.getTypeOfTraining().getName(),
 				training.getPrice(), training.getTrainingType().name(),

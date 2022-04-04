@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add hall</title>
+    <title>Edit Hall</title>
 </head>
 <body>
 <style>
@@ -10,19 +10,21 @@
     .tb th, .tb td { padding: 5px; border: solid 1px #777; }
     .tb th { background-color: lightblue; }
 </style>
-<form method="post" th:action="@{addHall}">
+<form method="post" th:action="@{editHall}">
+    <input type="hidden" name="hallName" th:value="${hall.hallName}">
     <table class="tb">
+        <caption>Edit hall</caption>
         <tr>
-            <th>Hall name: </th>
-            <td><input type="text" name="hallName" required></td>
+            <th>Hall name</th>
+            <td><span th:text="${hall.hallName}"></span></td>
         </tr>
         <tr>
             <th>Capacity: </th>
-            <td><input type="number" min="1" name="capacity" required></td>
+            <td><input type="number" min="1" name="capacity" required th:value="${hall.capacity}"></td>
         </tr>
         <tr>
             <th></th>
-            <td><input type="submit" value="Add hall"/></td>
+            <td><input type="submit" value="Save"/></td>
         </tr>
     </table>
 </form>
