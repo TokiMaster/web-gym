@@ -49,7 +49,7 @@ public class UserRepositoryImpl implements UserRepository{
 	
 	@Override
 	public User findOne(String username) {
-		String sql = "select * from User where username = ? and isBlocked = 0";
+		String sql = "select * from User where username = ?";
 		UserRowCallbackHandler callbackHandler = new UserRowCallbackHandler();
 		jdbcTemplate.query(sql, callbackHandler, username);
 		if(callbackHandler.users.isEmpty()) {
@@ -60,12 +60,23 @@ public class UserRepositoryImpl implements UserRepository{
 
 	@Override
 	public ArrayList<User> findAll() {
-		String sql = "select * from User where isBlocked = 0";
+		String sql = "select * from User";
 		UserRowCallbackHandler callbackHandler = new UserRowCallbackHandler();
 		jdbcTemplate.query(sql, callbackHandler);
 		return callbackHandler.users;
 	}
-	
+
+	@Override
+	public User login(String username, String password) {
+		String sql = "select * from User where username = ? and password = ? and isBlocked = 0";
+		UserRowCallbackHandler callbackHandler = new UserRowCallbackHandler();
+		jdbcTemplate.query(sql, callbackHandler, username, password);
+		if(callbackHandler.users.isEmpty()) {
+			return null;
+		}
+		return callbackHandler.users.get(0);
+	}
+
 	@Override
 	public void register(User newUser) {
 		String sql = "insert into User (username, password, email, name, surname, " +

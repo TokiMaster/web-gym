@@ -23,13 +23,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User login(String username, String password) {
-		User user = userRepository.findOne(username);
-		if (user != null) {
-			if(user.getPassword().equals(password) && !user.isBlocked()) {
-				return user;
-			}
-		}
-		return null;
+		return userRepository.login(username, password);
 	}
 	
 	@Override

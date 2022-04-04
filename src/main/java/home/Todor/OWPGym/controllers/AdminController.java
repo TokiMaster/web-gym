@@ -172,9 +172,11 @@ public class AdminController {
 
 		User editUser = userService.findOne(username);
 
-		boolean block = editUser.isBlocked();
+		boolean block;
 
-		if(isBlocked != null){
+		if(isBlocked == null){
+			block = false;
+		} else {
 			block = true;
 		}
 
