@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new appointment</title>
+</head>
+<body>
+<style>
+    .tb { border-collapse: collapse; }
+    .tb th, .tb td { padding: 5px; border: solid 1px #777; }
+    .tb th { background-color: lightblue; }
+</style>
+<form method="post" th:action="@{addTrainingAppointment}">
+    <table class="tb">
+        <tr>
+            <th>Hall: </th>
+            <td><select name="hall" required>
+                <option disabled selected> -- select a hall -- </option>
+                <option th:each="hall : ${halls}" th:text="${hall.hallName}" th:value="${hall.id}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Training: </th>
+            <td><select name="training" required>
+                <option disabled selected> -- select a training -- </option>
+                <option th:each="training : ${trainings}" th:text="${training.name}" th:value="${training.id}"></option>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Start date: </th>
+            <td><input type="datetime-local" name="startDate" required></td>
+        </tr>
+        <tr>
+            <th></th>
+            <td><input type="submit" value="Add appointment"/></td>
+        </tr>
+    </table>
+</form>
+<h3 th:if="${error}">Something went wrong</h3>
+</body>
+</html>

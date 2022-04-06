@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 
 import home.Todor.OWPGym.Repository.HallRepository;
+import home.Todor.OWPGym.Repository.TrainingAppointmentRepository;
 import home.Todor.OWPGym.Repository.UserRepository;
 import home.Todor.OWPGym.models.*;
 import home.Todor.OWPGym.service.HallService;
+import home.Todor.OWPGym.service.TrainingAppointmentService;
 import home.Todor.OWPGym.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -43,6 +45,12 @@ public class AdminController {
 
 	@Autowired
 	HallService hallService;
+
+	@Autowired
+	TrainingAppointmentService trainingAppointmentService;
+
+	@Autowired
+	TrainingAppointmentRepository trainingAppointmentRepository;
 
 	@GetMapping
 	public String admin(HttpSession session, Model model) {
@@ -204,8 +212,31 @@ public class AdminController {
 		
 		ArrayList<TypeOfTraining> typeOfTrainings = trainingRepository.findAllTypes();
 		model.addAttribute("typeOfTrainings", typeOfTrainings);
-		model.addAttribute("type", loggedUser);
+//		model.addAttribute("type", loggedUser);
 		return "AddTraining.html";
+	}
+
+	@PostMapping("addTraining")
+	public String addTraining(HttpSession session, @RequestParam("name") String name,
+				  @RequestParam("instructor") String instructor, @RequestParam("description") String description,
+				  @RequestParam(value = "photo", required = false) String photo, @RequestParam("typeOfTraining") String typeOfTraining,
+				  @RequestParam("price") int price, @RequestParam("type") String trainingType,
+				  @RequestParam("intensity") String trainingLVL, @RequestParam("duration") int duration, Model model) {
+
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		if (trainingService.addTraining(new Training(name, instructor, description, photo,
+				trainingRepository.findOneByTypeOfTraining(typeOfTraining), price,
+				TrainingType.valueOf(trainingType), TrainingLVL.valueOf(trainingLVL),
+				duration, 4)) == null) {
+			model.addAttribute("error", true);
+			return "AddTraining.html";
+		}
+		return "redirect:/";
 	}
 	
 	@GetMapping("trainingInfo")
@@ -222,30 +253,6 @@ public class AdminController {
 			model.addAttribute("training", training);
 			model.addAttribute("user", loggedUser);
 			return "Training.html";
-		}
-		return "redirect:/";
-	}
-	
-	
-	@PostMapping("addTraining")
-	public String addTreining(HttpSession session, @RequestParam("name") String name, 
-			@RequestParam("instructor") String instructor, @RequestParam("description") String description,
-			@RequestParam("photo") String photo, @RequestParam("typeOfTraining") String typeOfTraining,
-			@RequestParam("price") int price,@RequestParam("type") String trainingType, 
-			@RequestParam("intensity") String trainingLVL, @RequestParam("duration") int duration, Model model) {
-		
-		User loggedUser = (User)session.getAttribute("user");
-		
-		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
-			return "redirect:/";
-		}
-		
-		if (trainingService.addTraining(new Training(name, instructor, description, photo,
-				trainingRepository.findOneByTypeOfTraining(typeOfTraining), price,
-				TrainingType.valueOf(trainingType), TrainingLVL.valueOf(trainingLVL),
-				duration, 4)) == null) {
-			model.addAttribute("error", true);
-			return "AddTraining.html";
 		}
 		return "redirect:/";
 	}
@@ -307,14 +314,14 @@ public class AdminController {
 	}
 
 	@GetMapping("allHalls/editHall")
-	public String editHall(HttpSession session, Model model, @RequestParam("id") String hallName){
+	public String editHall(HttpSession session, Model model, @RequestParam("id") int id){
 		User loggedUser = (User)session.getAttribute("user");
 
 		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
 			return "redirect:/";
 		}
 
-		Hall hall = hallRepository.findOne(hallName);
+		Hall hall = hallRepository.findOne(id);
 		if(hall != null){
 			model.addAttribute("hall", hall);
 			return "EditHall.html";
@@ -323,7 +330,7 @@ public class AdminController {
 	}
 
 	@PostMapping("allHalls/editHall")
-	public String editHall(HttpSession session, Model model, @RequestParam("hallName") String hallName,
+	public String editHall(HttpSession session, Model model, @RequestParam("id") int id,
 						   @RequestParam("capacity") int capacity){
 		User loggedUser = (User)session.getAttribute("user");
 
@@ -331,9 +338,15 @@ public class AdminController {
 			return "redirect:/";
 		}
 
-		if(hallService.editHall(new Hall(hallName, capacity)) == null){
-			model.addAttribute("error", true);
-			return "EditHall.html";
+		Hall hall = hallRepository.findOne(id);
+
+		if(hall != null){
+			Hall editHall = new Hall(id, hall.getHallName(), capacity);
+			model.addAttribute("hall", editHall);
+			if(hallService.editHall(editHall) == null){
+				model.addAttribute("error", true);
+				return "EditHall.html";
+			}
 		}
 
 		return "redirect:/";
@@ -365,5 +378,44 @@ public class AdminController {
 
 		model.addAttribute("error", true);
 		return "AddHall.html";
+	}
+
+	@GetMapping("addTrainingAppointment")
+	public String addTrainingAppointment(HttpSession session, Model model){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		ArrayList<Hall> halls = hallRepository.findAll();
+		ArrayList<Training> trainings = trainingRepository.findAll();
+		model.addAttribute("halls", halls);
+		model.addAttribute("trainings", trainings);
+
+		return "AddTrainingAppointment.html";
+	}
+
+	@PostMapping("addTrainingAppointment")
+	public String addTrainingAppointment(HttpSession session, Model model,
+				 @RequestParam("hall") int hall, @RequestParam("training") int training,
+				 @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		if(trainingAppointmentService.addTrainingAppointment(new TrainingAppointment(hallRepository.findOne(hall),
+				trainingRepository.findOne(training), startDate)) == null){
+			ArrayList<Hall> halls = hallRepository.findAll();
+			ArrayList<Training> trainings = trainingRepository.findAll();
+			model.addAttribute("halls", halls);
+			model.addAttribute("trainings", trainings);
+			model.addAttribute("error", true);
+			return "AddTrainingAppointment.html";
+		}
+
+		return "redirect:/";
 	}
 }

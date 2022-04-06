@@ -25,19 +25,20 @@ public class HallRepositoryImpl implements HallRepository {
         public void processRow(ResultSet rs) throws SQLException {
             int index = 1;
 
+            int id = rs.getInt(index++);
             String hallName = rs.getString(index++);
             int capacity = rs.getInt(index++);
 
-            Hall hall = new Hall(hallName, capacity);
+            Hall hall = new Hall(id, hallName, capacity);
             halls.add(hall);
         }
     }
 
     @Override
-    public Hall findOne(String hallName) {
-        String sql = "select * from Hall where hallName = ?";
+    public Hall findOne(int id) {
+        String sql = "select * from Hall where id = ?";
         HallRowCallbackHandler hallRowCallbackHandler = new HallRowCallbackHandler();
-        jdbcTemplate.query(sql, hallRowCallbackHandler, hallName);
+        jdbcTemplate.query(sql, hallRowCallbackHandler, id);
         if(hallRowCallbackHandler.halls.isEmpty()) {
             return null;
         }

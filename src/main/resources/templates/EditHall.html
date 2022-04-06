@@ -11,7 +11,7 @@
     .tb th { background-color: lightblue; }
 </style>
 <form method="post" th:action="@{editHall}">
-    <input type="hidden" name="hallName" th:value="${hall.hallName}">
+    <input type="hidden" name="id" th:value="${hall.id}">
     <table class="tb">
         <caption>Edit hall</caption>
         <tr>
