@@ -1,13 +1,13 @@
 package home.Todor.OWPGym.models;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class TrainingAppointment {
     private int id;
     private Hall hall;
     private Training training;
     private LocalDateTime startDate;
-
 
     public int getId() {
         return id;
@@ -52,5 +52,18 @@ public class TrainingAppointment {
         this.hall = hall;
         this.training = training;
         this.startDate = startDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TrainingAppointment that = (TrainingAppointment) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

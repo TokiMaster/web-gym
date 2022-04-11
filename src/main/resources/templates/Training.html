@@ -5,7 +5,8 @@
 	<title>Training</title>
 </head>
 <body>
-	Name: <span th:text="${training.name}"></span><br>
+<form method="post" th:action="@{addToCart}">
+	Name: <span th:text="${training.name}" name="trainingId" th:value="${training.id}" ></span><br>
 	Instructor: <span th:text="${training.instructor}"></span><br>
 	Description: <span th:text="${training.description}"></span><br>
 	Photo: <img th:src="${training.photo}"/><br>
@@ -14,7 +15,15 @@
 	Price: <span th:text="${training.price}"></span><br>
 	Type of training: <span th:text="${training.trainingType}"></span><br>
 	Training intensity: <span th:text="${training.trainingLVL}"></span><br>
+	Training date:
+	<select name="id">
+		<option th:each="appointment : ${appointments}" th:text="${appointment.startDate}" th:value="${appointment.id}"></option>
+	</select>
+	<br>
 	Duration: <span th:text="${training.duration}"></span><br>
+	<button th:if="${user.role.name == 'MEMBER'}" type="submit">Add to shopping cart</button>
+</form>
+<h3 th:if="${error}">Already in cart</h3>
 	<a th:if="${user.role.name == 'ADMINISTRATOR'}" th:href="@{|editTraining?id=${training.id}|}">Edit training</a>
 </body>
 </html>

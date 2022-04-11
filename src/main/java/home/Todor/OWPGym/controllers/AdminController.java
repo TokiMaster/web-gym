@@ -212,7 +212,7 @@ public class AdminController {
 		
 		ArrayList<TypeOfTraining> typeOfTrainings = trainingRepository.findAllTypes();
 		model.addAttribute("typeOfTrainings", typeOfTrainings);
-//		model.addAttribute("type", loggedUser);
+		model.addAttribute("type", loggedUser);
 		return "AddTraining.html";
 	}
 
@@ -252,9 +252,18 @@ public class AdminController {
 		if(training != null) {
 			model.addAttribute("training", training);
 			model.addAttribute("user", loggedUser);
-			return "Training.html";
 		}
-		return "redirect:/";
+
+		ArrayList<TrainingAppointment> appointments = new ArrayList<>();
+
+		for(TrainingAppointment appointment : trainingAppointmentRepository.findAll()){
+			if(appointment.getTraining().getId() == training.getId()){
+				appointments.add(appointment);
+				model.addAttribute("appointments", appointments);
+			}
+		}
+
+		return "Training.html";
 	}
 	
 	@GetMapping("editTraining")

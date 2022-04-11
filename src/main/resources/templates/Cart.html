@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Cart</title>
+</head>
+<body>
+<style>
+  .tb { border-collapse: collapse; }
+  .tb th, .tb td { padding: 5px; border: solid 1px #777; }
+  .tb th { background-color: lightblue; }
+</style>
+<table class="tb">
+  <caption>Cart</caption>
+  <tr>
+    <th>Name</th>
+    <th>Instructor</th>
+    <th>Type of training</th>
+    <th>Start date</th>
+    <th>Price</th>
+  </tr>
+  <tr th:each="training : ${appointments}" >
+    <td th:text="${training.getTraining().getName()}" ></td>
+    <td th:text="${training.getTraining().getInstructor()}"></td>
+    <td th:text="${training.getTraining().getTypeOfTraining().getName()}"></td>
+    <td th:text="${training.startDate}"></td>
+    <td th:text="${training.getTraining().getPrice()}"></td>
+  </tr>
+</table>
+</body>
+</html>
