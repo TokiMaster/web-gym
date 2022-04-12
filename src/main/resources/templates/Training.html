@@ -5,7 +5,12 @@
 	<title>Training</title>
 </head>
 <body>
+<a href="/logout">Logout</a><br>
+<a th:if="${user.role.name == 'ADMINISTRATOR'}" href="/admin/profileInfo">My profile</a>
+<a th:if="${user.role.name == 'MEMBER'}" href="/member/profileInfo">My profile</a><br>
+<a href="/">Home</a><br>
 <form method="post" th:action="@{addToCart}">
+<!--<form method="post" th:action="@{addToWishList}">-->
 	Name: <span th:text="${training.name}" name="trainingId" th:value="${training.id}" ></span><br>
 	Instructor: <span th:text="${training.instructor}"></span><br>
 	Description: <span th:text="${training.description}"></span><br>
@@ -22,7 +27,10 @@
 	<br>
 	Duration: <span th:text="${training.duration}"></span><br>
 	<button th:if="${user.role.name == 'MEMBER'}" type="submit">Add to shopping cart</button>
+<!--	<button th:if="${user.role.name == 'MEMBER'}" type="submit">Add to wish list</button>-->
+<!--</form>-->
 </form>
+
 <h3 th:if="${error}">Already in cart</h3>
 	<a th:if="${user.role.name == 'ADMINISTRATOR'}" th:href="@{|editTraining?id=${training.id}|}">Edit training</a>
 </body>

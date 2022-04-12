@@ -5,73 +5,76 @@
     <title>Edit training</title>
 </head>
 <body>
-    <style>
-        .tb { border-collapse: collapse; }
-        .tb th, .tb td { padding: 5px; border: solid 1px #777; }
-        .tb th { background-color: lightblue; }
-    </style>
-    <form method="post" th:action="@{editTraining}">
-    <input type="hidden" name="id" th:value="${training.id}">
-        <table class="tb">
-            <caption>Edit training</caption>
-            <tr>
-                <th>Name:</th>
-                <td><input type="text" name="name" th:value="${training.name}" required/></td>
-            </tr>
-            <tr>
-                <th>Instructor:</th>
-                <td><input type="text" name="instructor" th:value="${training.instructor}" required/></td>
-            </tr>
-            <tr>
-                <th>Description:</th>
-                <td><textarea rows="4" cols="40"  name="description" th:text="${training.description}" required></textarea></td>
-            </tr>
-            <tr>
-                <th>Photo:</th>
-                <td><input type="file" name="photo" accept="photo/png, photo/jpeg" /></td>
-            </tr>
-            <tr>
-                <th>Type of training:</th>
-                <td><select name="typeOfTraining">
-                        <option th:text="${training.typeOfTraining.name}"></option>
-                        <option th:if="${training.typeOfTraining.name != 'Bodybuilding'}">Bodybuilding</option>
-                        <option th:if="${training.typeOfTraining.name != 'Aerobic'}">Aerobic</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th>Price:</th>
-                <td><input type="number" name="price" min="0" th:value="${training.price}" required/></td>
-            </tr>
-            <tr>
-                <th>Type of training</th>
-                <td><select name="type" >
-                        <option th:text="${training.trainingType.name}"></option>
-                        <option th:if="${training.trainingType.name != 'INDIVIDUAL'}">INDIVIDUAL</option>
-                        <option th:if="${training.trainingType.name != 'GROUP'}">GROUP</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th>Training intensity</th>
-                <td><select name="intensity">
-                        <option th:text="${training.trainingLVL.name}"></option>
-                        <option th:if="${training.trainingLVL.name != 'AMATEUR'}">AMATEUR</option>
-                        <option th:if="${training.trainingLVL.name != 'INTERMEDIATE'}">INTERMEDIATE</option>
-                        <option th:if="${training.trainingLVL.name != 'ADVANCED'}">ADVANCED</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th>Duration:</th>
-                <td><input type="number" name="duration" min="1" th:value="${training.duration}" required/></td>
-            </tr>
-            <tr>
-                <th></th>
-                <td><input type="submit" value="Save" /></td>
-            </tr>
-        </table>
-    </form>
-    <h3 th:if="${error}">Something went wrong</h3>
+<style>
+    .tb { border-collapse: collapse; }
+    .tb th, .tb td { padding: 5px; border: solid 1px #777; }
+    .tb th { background-color: lightblue; }
+</style>
+<a href="/logout">Logout</a><br>
+<a href="/admin/profileInfo">My profile</a><br>
+<a href="/">Home</a><br>
+<form method="post" th:action="@{editTraining}">
+<input type="hidden" name="id" th:value="${training.id}">
+    <table class="tb">
+        <caption>Edit training</caption>
+        <tr>
+            <th>Name:</th>
+            <td><input type="text" name="name" th:value="${training.name}" required/></td>
+        </tr>
+        <tr>
+            <th>Instructor:</th>
+            <td><input type="text" name="instructor" th:value="${training.instructor}" required/></td>
+        </tr>
+        <tr>
+            <th>Description:</th>
+            <td><textarea rows="4" cols="40"  name="description" th:text="${training.description}" required></textarea></td>
+        </tr>
+        <tr>
+            <th>Photo:</th>
+            <td><input type="file" name="photo" accept="photo/png, photo/jpeg" /></td>
+        </tr>
+        <tr>
+            <th>Type of training:</th>
+            <td><select name="typeOfTraining">
+                    <option th:text="${training.typeOfTraining.name}"></option>
+                    <option th:if="${training.typeOfTraining.name != 'Bodybuilding'}">Bodybuilding</option>
+                    <option th:if="${training.typeOfTraining.name != 'Aerobic'}">Aerobic</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Price:</th>
+            <td><input type="number" name="price" min="0" th:value="${training.price}" required/></td>
+        </tr>
+        <tr>
+            <th>Type of training</th>
+            <td><select name="type" >
+                    <option th:text="${training.trainingType.name}"></option>
+                    <option th:if="${training.trainingType.name != 'INDIVIDUAL'}">INDIVIDUAL</option>
+                    <option th:if="${training.trainingType.name != 'GROUP'}">GROUP</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Training intensity</th>
+            <td><select name="intensity">
+                    <option th:text="${training.trainingLVL.name}"></option>
+                    <option th:if="${training.trainingLVL.name != 'AMATEUR'}">AMATEUR</option>
+                    <option th:if="${training.trainingLVL.name != 'INTERMEDIATE'}">INTERMEDIATE</option>
+                    <option th:if="${training.trainingLVL.name != 'ADVANCED'}">ADVANCED</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Duration:</th>
+            <td><input type="number" name="duration" min="1" th:value="${training.duration}" required/></td>
+        </tr>
+        <tr>
+            <th></th>
+            <td><input type="submit" value="Save" /></td>
+        </tr>
+    </table>
+</form>
+<h3 th:if="${error}">Something went wrong</h3>
 </body>
 </html>

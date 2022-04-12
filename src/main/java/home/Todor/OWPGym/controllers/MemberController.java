@@ -153,6 +153,28 @@ public class MemberController {
 		return "redirect:/";
 	}
 
+	private ArrayList<TrainingAppointment> wishList = new ArrayList<>();
+
+	@PostMapping("addToWishList")
+	public String wishList(HttpSession session, Model model, @RequestParam("id") int id){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.MEMBER ) {
+			return "redirect:/";
+		}
+
+		TrainingAppointment appointment = trainingAppointmentRepository.findOne(id);
+
+		if(appointment != null && !wishList.contains(appointment)){
+			wishList.add(appointment);
+			session.setAttribute("wishList", wishList);
+			return "redirect:/";
+		}
+
+		model.addAttribute("error", true);
+
+		return "redirect:/";
+	}
 
 // TODO
 //		@RequestParam(value = "trainingId", required = false) Integer trainingId
@@ -174,6 +196,62 @@ public class MemberController {
 		ArrayList<TrainingAppointment> appointments = (ArrayList<TrainingAppointment>) session.getAttribute("appointments");
 		model.addAttribute("appointments", appointments);
 
+		double total = 0;
+		for (TrainingAppointment appointment : appointments) {
+			total += appointment.getTraining().getPrice();
+		}
+		model.addAttribute("total", total);
+
 		return "Cart.html";
+	}
+
+	@PostMapping("removeFromCart")
+	public String removeFromCart(HttpSession session, @RequestParam("remove") int id){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.MEMBER ) {
+			return "redirect:/";
+		}
+
+		ArrayList<TrainingAppointment> appointments = (ArrayList<TrainingAppointment>) session.getAttribute("appointments");
+		TrainingAppointment appointment = trainingAppointmentRepository.findOne(id);
+		if(appointment != null && appointments.contains(appointment)){
+			appointments.remove(appointment);
+			return "redirect:/member/cart";
+		}
+
+		return "redirect:/";
+	}
+
+	@GetMapping("wishList")
+	public String wishList(HttpSession session, Model model){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.MEMBER ) {
+			return "redirect:/";
+		}
+
+		ArrayList<TrainingAppointment> appointments = (ArrayList<TrainingAppointment>) session.getAttribute("wishList");
+		model.addAttribute("wishList", appointments);
+
+		return "WishList.html";
+	}
+
+	@PostMapping("removeFromWishList")
+	public String removeFromWishList(HttpSession session, @RequestParam("remove") int id){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.MEMBER ) {
+			return "redirect:/";
+		}
+
+		ArrayList<TrainingAppointment> appointments = (ArrayList<TrainingAppointment>) session.getAttribute("wishList");
+		TrainingAppointment appointment = trainingAppointmentRepository.findOne(id);
+		if(appointment != null && appointments.contains(appointment)){
+			appointments.remove(appointment);
+			return "redirect:/member/wishList";
+		}
+
+		return "redirect:/";
 	}
 }

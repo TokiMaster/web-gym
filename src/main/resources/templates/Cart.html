@@ -10,6 +10,9 @@
   .tb th, .tb td { padding: 5px; border: solid 1px #777; }
   .tb th { background-color: lightblue; }
 </style>
+<a href="/logout">Logout</a><br>
+<a href="/member/profileInfo">My profile</a><br>
+<a href="/">Home</a><br>
 <table class="tb">
   <caption>Cart</caption>
   <tr>
@@ -18,6 +21,7 @@
     <th>Type of training</th>
     <th>Start date</th>
     <th>Price</th>
+    <th>Remove</th>
   </tr>
   <tr th:each="training : ${appointments}" >
     <td th:text="${training.getTraining().getName()}" ></td>
@@ -25,6 +29,18 @@
     <td th:text="${training.getTraining().getTypeOfTraining().getName()}"></td>
     <td th:text="${training.startDate}"></td>
     <td th:text="${training.getTraining().getPrice()}"></td>
+    <form method="post" th:action="@{removeFromCart}">
+      <input type="hidden" name="remove" th:value="${training.getId()}" />
+      <td><input type="submit" value="Remove"/></td>
+    </form>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>Total:</td>
+    <td th:text="${total}"></td>
+    <td></td>
   </tr>
 </table>
 </body>
