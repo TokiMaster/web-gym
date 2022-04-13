@@ -5,9 +5,9 @@
 	<title>Member</title>
 </head>
 <body>
- <a href="/logout">Logout</a><br>
- <a href="member/profileInfo">My profile</a>
- <style>
+<a href="/logout">Logout</a><br>
+<a href="/member/profileInfo">My profile</a>
+<style>
 	.tb { border-collapse: collapse; }
 	.tb th, .tb td { padding: 5px; border: solid 1px #777; }
 	.tb th { background-color: lightblue; }
@@ -24,10 +24,12 @@
 		<td th:text="${training.name}"></td>
 		<td th:text="${training.instructor}"></td>
 		<td th:text="${training.price}"></td>
-		<td><a th:href="@{|member/trainingInfo?id=${training.id}|}">Details</a></td>
+		<td><a th:href="@{|/member/trainingInfo?id=${training.id}|}">Details</a></td>
 	</tr>
 </table>
-<a href="member/cart">Cart</a><br>
-<a href="member/wishList">Wish list</a>
+<a href="/member/cart">Cart</a><br>
+<a href="/member/wishList">Wish list</a>
+<h3 th:if="${error}">Nothing in cart</h3>
+<h3 th:if="${errors}">Nothing in wish list</h3>
 </body>
 </html>

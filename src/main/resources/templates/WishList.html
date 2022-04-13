@@ -19,7 +19,6 @@
         <th>Name</th>
         <th>Instructor</th>
         <th>Type of training</th>
-        <th>Start date</th>
         <th>Price</th>
         <th>Remove</th>
     </tr>
@@ -27,7 +26,6 @@
         <td th:text="${training.getTraining().getName()}" ></td>
         <td th:text="${training.getTraining().getInstructor()}"></td>
         <td th:text="${training.getTraining().getTypeOfTraining().getName()}"></td>
-        <td th:text="${training.startDate}"></td>
         <td th:text="${training.getTraining().getPrice()}"></td>
         <form method="post" th:action="@{removeFromWishList}">
             <input type="hidden" name="remove" th:value="${training.getId()}" />

@@ -115,7 +115,7 @@ public class LoginRegistrationController {
 	
 	@GetMapping("logout")
 	public String logout(HttpSession session) {
-		session.removeAttribute("user");
+		session.invalidate();
 		return "redirect:/";
 	}
 }

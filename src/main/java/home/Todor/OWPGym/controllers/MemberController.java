@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 
 import home.Todor.OWPGym.Repository.TrainingAppointmentRepository;
-import home.Todor.OWPGym.models.TrainingAppointment;
+import home.Todor.OWPGym.Repository.WishListRepository;
+import home.Todor.OWPGym.models.*;
 import home.Todor.OWPGym.service.UserService;
+import home.Todor.OWPGym.service.WishListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -15,9 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import home.Todor.OWPGym.Repository.TrainingRepository;
-import home.Todor.OWPGym.models.Role;
-import home.Todor.OWPGym.models.Training;
-import home.Todor.OWPGym.models.User;
 
 @Controller
 @RequestMapping("/member")
@@ -31,7 +30,12 @@ public class MemberController {
 
 	@Autowired
 	TrainingAppointmentRepository trainingAppointmentRepository;
-	
+
+	@Autowired
+	WishListService wishListService;
+
+	@Autowired
+	WishListRepository wishListRepository;
 	
 	@GetMapping
 	public String member(HttpSession session, Model model) {
@@ -153,37 +157,23 @@ public class MemberController {
 		return "redirect:/";
 	}
 
-	private ArrayList<TrainingAppointment> wishList = new ArrayList<>();
-
 	@PostMapping("addToWishList")
-	public String wishList(HttpSession session, Model model, @RequestParam("id") int id){
+	public String addToWishList(HttpSession session, Model model, @RequestParam("trainingId") int id){
 		User loggedUser = (User)session.getAttribute("user");
 
 		if(loggedUser == null || loggedUser.getRole() != Role.MEMBER ) {
 			return "redirect:/";
 		}
 
-		TrainingAppointment appointment = trainingAppointmentRepository.findOne(id);
+		Training training = trainingRepository.findOne(id);
 
-		if(appointment != null && !wishList.contains(appointment)){
-			wishList.add(appointment);
-			session.setAttribute("wishList", wishList);
-			return "redirect:/";
+		if (training != null) {
+			wishListService.addToWishList(new WishList(loggedUser, training));
 		}
 
-		model.addAttribute("error", true);
-
+		model.addAttribute("errors", true);
 		return "redirect:/";
 	}
-
-// TODO
-//		@RequestParam(value = "trainingId", required = false) Integer trainingId
-//		Training training = trainingRepository.findOne(trainingId);
-//		if(training != null) {
-//			model.addAttribute("training", training);
-//			model.addAttribute("user", loggedUser);
-//			return "Training.html";
-//		}
 
 	@GetMapping("cart")
 	public String cart(HttpSession session, Model model){
@@ -194,6 +184,12 @@ public class MemberController {
 		}
 
 		ArrayList<TrainingAppointment> appointments = (ArrayList<TrainingAppointment>) session.getAttribute("appointments");
+		if(appointments == null){
+			model.addAttribute("error", true);
+			ArrayList<Training> trainings = trainingRepository.findAll();
+			model.addAttribute("trainings", trainings);
+			return "Member.html";
+		}
 		model.addAttribute("appointments", appointments);
 
 		double total = 0;
@@ -231,8 +227,15 @@ public class MemberController {
 			return "redirect:/";
 		}
 
-		ArrayList<TrainingAppointment> appointments = (ArrayList<TrainingAppointment>) session.getAttribute("wishList");
-		model.addAttribute("wishList", appointments);
+		ArrayList<WishList> wishLists = wishListRepository.findUsersWishList(loggedUser.getUsername());
+		if(wishLists == null){
+			model.addAttribute("errors",true);
+			ArrayList<Training> trainings = trainingRepository.findAll();
+			model.addAttribute("trainings", trainings);
+			return "Member.html";
+		}
+
+		model.addAttribute("wishList", wishLists);
 
 		return "WishList.html";
 	}
@@ -245,10 +248,9 @@ public class MemberController {
 			return "redirect:/";
 		}
 
-		ArrayList<TrainingAppointment> appointments = (ArrayList<TrainingAppointment>) session.getAttribute("wishList");
-		TrainingAppointment appointment = trainingAppointmentRepository.findOne(id);
-		if(appointment != null && appointments.contains(appointment)){
-			appointments.remove(appointment);
+		WishList training = wishListRepository.findOne(id);
+		if(training != null){
+			wishListRepository.deleteFromWishList(training);
 			return "redirect:/member/wishList";
 		}
 
