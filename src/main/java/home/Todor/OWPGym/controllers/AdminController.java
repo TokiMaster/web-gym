@@ -5,13 +5,9 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
-import home.Todor.OWPGym.Repository.HallRepository;
-import home.Todor.OWPGym.Repository.TrainingAppointmentRepository;
-import home.Todor.OWPGym.Repository.UserRepository;
+import home.Todor.OWPGym.Repository.*;
 import home.Todor.OWPGym.models.*;
-import home.Todor.OWPGym.service.HallService;
-import home.Todor.OWPGym.service.TrainingAppointmentService;
-import home.Todor.OWPGym.service.UserService;
+import home.Todor.OWPGym.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -20,9 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import home.Todor.OWPGym.Repository.TrainingRepository;
-import home.Todor.OWPGym.service.TrainingService;
 
 @Controller
 @RequestMapping("/admin")
@@ -51,6 +44,12 @@ public class AdminController {
 
 	@Autowired
 	TrainingAppointmentRepository trainingAppointmentRepository;
+
+	@Autowired
+	CommentService commentService;
+
+	@Autowired
+	CommentRepository commentRepository;
 
 	@GetMapping
 	public String admin(HttpSession session, Model model) {
@@ -423,6 +422,61 @@ public class AdminController {
 			model.addAttribute("trainings", trainings);
 			model.addAttribute("error", true);
 			return "AddTrainingAppointment.html";
+		}
+
+		return "redirect:/";
+	}
+
+	@GetMapping("comments")
+	public String comments(HttpSession session, Model model){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		ArrayList<Comment> comments = commentRepository.findAll();
+		if(comments == null){
+			model.addAttribute("error", true);
+			ArrayList<Training> trainings = trainingRepository.findAll();
+			model.addAttribute("trainings", trainings);
+			return "Admin.html";
+		}
+
+		model.addAttribute("comments", comments);
+
+		return "Comments.html";
+	}
+
+	@PostMapping("accept")
+	public String acceptComment(HttpSession session, Model model, @RequestParam("id") int id){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		if(commentService.acceptComment(commentRepository.findOne(id)) != null){
+			ArrayList<Comment> comments = commentRepository.findAll();
+			model.addAttribute("comments", comments);
+			return "Comments.html";
+		}
+
+		return "redirect:/";
+	}
+
+	@PostMapping("reject")
+	public String rejectComment(HttpSession session, Model model, @RequestParam("id") int id){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		if(commentService.rejectComment(commentRepository.findOne(id)) != null){
+			ArrayList<Comment> comments = commentRepository.findAll();
+			model.addAttribute("comments", comments);
+			return "Comments.html";
 		}
 
 		return "redirect:/";

@@ -8,7 +8,9 @@
 <a href="/logout">Logout</a><br>
 <a href="/admin/profileInfo">My profile</a><br>
 <a href="/admin/allUsers">All users</a><br>
-<a href="/admin/allHalls">All halls</a>
+<a href="/admin/allHalls">All halls</a><br>
+<a href="/admin/comments">Comments</a>
+<h3 th:if="${error}">No comments to approve</h3>
 <style>
 	.tb { border-collapse: collapse; }
 	.tb th, .tb td { padding: 5px; border: solid 1px #777; }
@@ -29,7 +31,7 @@
 		<th>Average rating</th>
 	</tr>
 	<tr th:each="training : ${trainings}">
-		<td><a th:text="${training.name}" th:href="@{|admin/trainingInfo?id=${training.id}|}"></a></td>
+		<td><a th:text="${training.name}" th:href="@{|/admin/trainingInfo?id=${training.id}|}"></a></td>
 		<td th:text="${training.instructor}"></td>
 		<td th:text="${training.description}"></td>
 		<td th:text="${training.photo}"></td>

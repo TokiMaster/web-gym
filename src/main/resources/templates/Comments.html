@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Comments</title>
+</head>
+<body>
+<style>
+    .tb { border-collapse: collapse; }
+    .tb th, .tb td { padding: 5px; border: solid 1px #777; }
+    .tb th { background-color: lightblue; }
+</style>
+<a href="/logout">Logout</a><br>
+<a href="/admin/profileInfo">My profile</a><br>
+<a href="/">Home</a><br>
+<table class="tb">
+    <caption>All comments</caption>
+    <tr>
+        <th>Content</th>
+        <th>Rating</th>
+        <th>Author</th>
+        <th>Training</th>
+        <th>Status</th>
+        <th>Anonymous</th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr th:each="comment : ${comments}">
+        <td th:text="${comment.content}"></td>
+        <td th:text="${comment.rating}"></td>
+        <td th:text="${comment.author.username}"></td>
+        <td th:text="${comment.training.name}"></td>
+        <td th:text="${comment.status}"></td>
+        <td th:text="${comment.anonymous}"></td>
+        <td>
+            <form method="post" th:action="@{accept}">
+                <input type="hidden" name="id" th:value="${comment.id}">
+                <input type="submit" value="Accept" />
+            </form>
+        </td>
+        <td>
+            <form method="post" th:action="@{reject}">
+                <input type="hidden" name="id" th:value="${comment.id}">
+                <input type="submit" value="Reject" />
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
