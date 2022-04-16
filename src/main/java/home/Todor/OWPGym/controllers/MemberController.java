@@ -5,9 +5,11 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
+import home.Todor.OWPGym.Repository.CommentRepository;
 import home.Todor.OWPGym.Repository.TrainingAppointmentRepository;
 import home.Todor.OWPGym.Repository.WishListRepository;
 import home.Todor.OWPGym.models.*;
+import home.Todor.OWPGym.service.CommentService;
 import home.Todor.OWPGym.service.UserService;
 import home.Todor.OWPGym.service.WishListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,13 @@ public class MemberController {
 
 	@Autowired
 	WishListRepository wishListRepository;
-	
+
+	@Autowired
+	CommentService commentService;
+
+	@Autowired
+	CommentRepository commentRepository;
+
 	@GetMapping
 	public String member(HttpSession session, Model model) {
 		User loggedUser = (User)session.getAttribute("user");
@@ -47,7 +55,7 @@ public class MemberController {
 		
 		ArrayList<Training> trainings = trainingRepository.findAll();
 		model.addAttribute("trainings", trainings);
-		return "Member.html";
+		return "Member";
 	}
 
 	@GetMapping("profileInfo")
@@ -59,7 +67,7 @@ public class MemberController {
 		}
 
 		model.addAttribute("user", userService.findOne(loggedUser.getUsername()));
-		return "Profile.html";
+		return "Profile";
 	}
 
 	@GetMapping("editProfile")
@@ -71,7 +79,7 @@ public class MemberController {
 		}
 
 		model.addAttribute("user", userService.findOne(loggedUser.getUsername()));
-		return "EditProfile.html";
+		return "EditProfile";
 	}
 
 	@PostMapping("editProfile")
@@ -102,7 +110,7 @@ public class MemberController {
 			model.addAttribute("user", user);
 			if(userService.editUser(user) == null){
 				model.addAttribute("error", true);
-				return "EditProfile.html";
+				return "EditProfile";
 			}
 		}
 		return "redirect:/";
@@ -131,7 +139,49 @@ public class MemberController {
 			}
 		}
 		model.addAttribute("appointments", appointments);
-		return "Training.html";
+		model.addAttribute("comments", commentRepository.findAllAcceptedComments(training));
+
+		return "Training";
+	}
+
+	@PostMapping("postComment")
+	public String postComment(HttpSession session, Model model, @RequestParam("training") int id, @RequestParam("content") String content,
+							  @RequestParam("rating") int rating, @RequestParam(value = "anonymous", required = false) Boolean anonymous){
+
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.MEMBER ) {
+			return "redirect:/";
+		}
+
+		Training training = trainingRepository.findOne(id);
+		boolean isAnonymous;
+
+		if(anonymous == null){
+			isAnonymous = false;
+		} else {
+			isAnonymous = true;
+		}
+
+		Comment comment = new Comment(content, LocalDateTime.now(), rating, loggedUser, training, isAnonymous);
+		if(commentService.addComment(comment) == null){
+			model.addAttribute("error", true);
+		}
+
+		model.addAttribute("training", training);
+		model.addAttribute("user", loggedUser);
+
+		ArrayList<TrainingAppointment> appointments = new ArrayList<>();
+
+		for(TrainingAppointment appointment : trainingAppointmentRepository.findAll()){
+			if(appointment.getTraining().getId() == training.getId()){
+				appointments.add(appointment);
+			}
+		}
+		model.addAttribute("appointments", appointments);
+		model.addAttribute("comments", commentRepository.findAllAcceptedComments(training));
+
+		return "Training";
 	}
 
 	private ArrayList<TrainingAppointment> appointments = new ArrayList<>();
@@ -188,7 +238,7 @@ public class MemberController {
 			model.addAttribute("error", true);
 			ArrayList<Training> trainings = trainingRepository.findAll();
 			model.addAttribute("trainings", trainings);
-			return "Member.html";
+			return "Member";
 		}
 		model.addAttribute("appointments", appointments);
 
@@ -198,7 +248,7 @@ public class MemberController {
 		}
 		model.addAttribute("total", total);
 
-		return "Cart.html";
+		return "Cart";
 	}
 
 	@PostMapping("removeFromCart")
@@ -232,12 +282,12 @@ public class MemberController {
 			model.addAttribute("errors",true);
 			ArrayList<Training> trainings = trainingRepository.findAll();
 			model.addAttribute("trainings", trainings);
-			return "Member.html";
+			return "Member";
 		}
 
 		model.addAttribute("wishList", wishLists);
 
-		return "WishList.html";
+		return "WishList";
 	}
 
 	@PostMapping("removeFromWishList")

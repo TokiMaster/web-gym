@@ -31,6 +31,7 @@
 		<th>Average rating</th>
 	</tr>
 	<tr th:each="training : ${trainings}">
+<!--		<input type="hidden" name="id" th:value="${training.id}">-->
 		<td><a th:text="${training.name}" th:href="@{|/admin/trainingInfo?id=${training.id}|}"></a></td>
 		<td th:text="${training.instructor}"></td>
 		<td th:text="${training.description}"></td>

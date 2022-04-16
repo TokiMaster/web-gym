@@ -34,7 +34,7 @@ public class LoginRegistrationController {
 				return "redirect:/member";
 			}
 		}
-		return "redirect:/login";
+		return "Login";
 	}
 	
 	@GetMapping("login")
@@ -44,7 +44,7 @@ public class LoginRegistrationController {
 		if(loggedUser != null) {
 			return "redirect:/";
 		}
-		return "Login.html";
+		return "Login";
 	}
 	
 	
@@ -71,7 +71,7 @@ public class LoginRegistrationController {
 		}
 
 		model.addAttribute("error", true);
-		return "Login.html";
+		return "Login";
 	}
 	
 	@GetMapping("registration")
@@ -81,7 +81,7 @@ public class LoginRegistrationController {
 		if(loggedUser != null) {
 			return "redirect:/";
 		}
-		return "Registration.html";
+		return "Registration";
 	}
 	
 	@PostMapping("registration")
@@ -107,7 +107,7 @@ public class LoginRegistrationController {
 		
 		if(userService.register(newUser) == null) {
 			model.addAttribute("error", true);
-			return "Registration.html";
+			return "Registration";
 		}
 
 		return "redirect:/";

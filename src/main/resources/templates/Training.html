@@ -34,5 +34,36 @@
 <h3 th:if="${error}">Already in cart</h3>
 <h3 th:if="${errors}">Already in wish list</h3>
 <a th:if="${user.role.name == 'ADMINISTRATOR'}" th:href="@{|/admin/editTraining?id=${training.id}|}">Edit training</a>
+<br>
+<br>
+<br>
+<br>
+<form th:if="${user.role.name == 'MEMBER'}" method="post" th:action="@{postComment}">
+	<input type="hidden" name="training" th:value="${training.id}">
+	Leave a comment: <br> <textarea rows="3" cols="40" name="content" required></textarea><br>
+	Rate this training:
+	<select name="rating" required>
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+	</select><br>
+	Anonymous: <input type="checkbox" name="anonymous"><br>
+	<input type="submit" value="Publish comment" />
+</form>
+<h2 th:if="${error}">Comment must not be empty</h2>
+<br>
+<br>
+<br>
+<br>
+<h2>Comment section</h2>
+<p th:each="comment : ${comments}">
+	Published on: <span th:text="${comment.date}"></span><br>
+	Comment: <span th:text="${comment.content}"></span><br>
+	Rating: <span th:text="${comment.rating}"></span><br>
+	<span th:if="${comment.author != null}" th:text="User: ${comment.author.username}"></span>
+	<span th:if="${comment.author == null}" >User: Anonymous</span>
+</p>
 </body>
 </html>

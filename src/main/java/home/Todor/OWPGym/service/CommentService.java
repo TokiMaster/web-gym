@@ -5,4 +5,5 @@ import home.Todor.OWPGym.models.Comment;
 public interface CommentService {
     Comment acceptComment(Comment comment);
     Comment rejectComment(Comment comment);
+    Comment addComment(Comment comment);
 }

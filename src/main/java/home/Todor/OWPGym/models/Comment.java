@@ -1,10 +1,13 @@
 package home.Todor.OWPGym.models;
 
+import java.time.LocalDateTime;
+
 public class Comment {
 
     private int id;
     private String content;
     private int rating;
+    private LocalDateTime date;
     private User author;
     private Training training;
     private Status status;
@@ -24,6 +27,14 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     public int getRating() {
@@ -66,17 +77,19 @@ public class Comment {
         this.anonymous = anonymous;
     }
 
-    public Comment(String content, int rating, User author, Training training, boolean anonymous) {
+    public Comment(String content,LocalDateTime date, int rating, User author, Training training, boolean anonymous) {
         this.content = content;
+        this.date = date;
         this.rating = rating;
         this.author = author;
         this.training = training;
         this.anonymous = anonymous;
     }
 
-    public Comment(int id, String content, int rating, User author, Training training, Status status, boolean anonymous) {
+    public Comment(int id, String content, LocalDateTime date, int rating, User author, Training training, Status status, boolean anonymous) {
         this.id = id;
         this.content = content;
+        this.date = date;
         this.rating = rating;
         this.author = author;
         this.training = training;

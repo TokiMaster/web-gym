@@ -58,9 +58,20 @@ public class AdminController {
 		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
 			return "redirect:/";
 		}
+
+//		int rating = 0;
+//		double average = 0;
 		ArrayList<Training> trainings = trainingRepository.findAll();
+//		ArrayList<Comment> comments = commentRepository.findAllAcceptedComments(trainingRepository.findOne(id));
+//		for(int i = 0; i < trainings.size(); i++){
+//			for(int j = 0; i < comments.size(); j++){
+//				if(trainings.get(i).getId() == comments.get(j).getTraining().getId() && comments.get(j).getStatus().equals("ACCEPTED")){
+//					rating += comments.get(j).getRating();
+//				}
+//			}
+//		}
 		model.addAttribute("trainings", trainings);
-		return "Admin.html";
+		return "Admin";
 	}
 
 	@GetMapping("profileInfo")
@@ -72,7 +83,7 @@ public class AdminController {
 		}
 
 		model.addAttribute("user", userService.findOne(loggedUser.getUsername()));
-		return "Profile.html";
+		return "Profile";
 	}
 
 	@GetMapping("editProfile")
@@ -84,7 +95,7 @@ public class AdminController {
 		}
 
 		model.addAttribute("user",  userService.findOne(loggedUser.getUsername()));
-		return "EditProfile.html";
+		return "EditProfile";
 	}
 
 	@PostMapping("editProfile")
@@ -115,7 +126,7 @@ public class AdminController {
 			model.addAttribute("user", user);
 			if(userService.editUser(user) == null){
 				model.addAttribute("error", true);
-				return "EditProfile.html";
+				return "EditProfile";
 			}
 		}
 		return "redirect:/";
@@ -132,7 +143,7 @@ public class AdminController {
 		ArrayList<User> users = userRepository.findAll();
 		model.addAttribute("users", users);
 
-		return "AllUsers.html";
+		return "AllUsers";
 	}
 
 	@GetMapping("allUsers/userInfo")
@@ -146,7 +157,7 @@ public class AdminController {
 		User user = userRepository.findOne(username);
 		if(user != null){
 			model.addAttribute("user", user);
-			return "User.html";
+			return "User";
 		}
 		return "redirect:/";
 	}
@@ -162,7 +173,7 @@ public class AdminController {
 		User user = userRepository.findOne(username);
 		if(user != null){
 			model.addAttribute("user", user);
-			return "EditUser.html";
+			return "EditUser";
 		}
 
 		return "redirect:/";
@@ -195,7 +206,7 @@ public class AdminController {
 			model.addAttribute("user", user);
 			if(userService.editUser(user) == null){
 				model.addAttribute("error", true);
-				return "EditUser.html";
+				return "EditUser";
 			}
 		}
 		return "redirect:/";
@@ -212,7 +223,7 @@ public class AdminController {
 		ArrayList<TypeOfTraining> typeOfTrainings = trainingRepository.findAllTypes();
 		model.addAttribute("typeOfTrainings", typeOfTrainings);
 		model.addAttribute("type", loggedUser);
-		return "AddTraining.html";
+		return "AddTraining";
 	}
 
 	@PostMapping("addTraining")
@@ -233,7 +244,7 @@ public class AdminController {
 				TrainingType.valueOf(trainingType), TrainingLVL.valueOf(trainingLVL),
 				duration, 4)) == null) {
 			model.addAttribute("error", true);
-			return "AddTraining.html";
+			return "AddTraining";
 		}
 		return "redirect:/";
 	}
@@ -262,7 +273,9 @@ public class AdminController {
 			}
 		}
 
-		return "Training.html";
+		model.addAttribute("comments", commentRepository.findAllAcceptedComments(training));
+
+		return "Training";
 	}
 	
 	@GetMapping("editTraining")
@@ -276,7 +289,7 @@ public class AdminController {
 		Training training = trainingRepository.findOne(id);
 		if(training != null) {
 			model.addAttribute("training", training);
-			return "EditTraining.html";
+			return "EditTraining";
 		}
 		return "redirect:/";
 	}
@@ -302,7 +315,7 @@ public class AdminController {
 			model.addAttribute("training", editTraining);
 			if (trainingService.editTraining(editTraining) == null) {
 				model.addAttribute("error", true);
-				return "EditTraining.html";
+				return "EditTraining";
 			}
 		}
 		return "redirect:/";
@@ -318,7 +331,7 @@ public class AdminController {
 
 		ArrayList<Hall> halls = hallRepository.findAll();
 		model.addAttribute("halls", halls);
-		return "Halls.html";
+		return "Halls";
 	}
 
 	@GetMapping("allHalls/editHall")
@@ -332,7 +345,7 @@ public class AdminController {
 		Hall hall = hallRepository.findOne(id);
 		if(hall != null){
 			model.addAttribute("hall", hall);
-			return "EditHall.html";
+			return "EditHall";
 		}
 		return "redirect:/";
 	}
@@ -353,7 +366,7 @@ public class AdminController {
 			model.addAttribute("hall", editHall);
 			if(hallService.editHall(editHall) == null){
 				model.addAttribute("error", true);
-				return "EditHall.html";
+				return "EditHall";
 			}
 		}
 
@@ -368,7 +381,7 @@ public class AdminController {
 			return "redirect:/";
 		}
 
-		return "AddHall.html";
+		return "AddHall";
 	}
 
 	@PostMapping("addHall")
@@ -385,7 +398,7 @@ public class AdminController {
 		}
 
 		model.addAttribute("error", true);
-		return "AddHall.html";
+		return "AddHall";
 	}
 
 	@GetMapping("addTrainingAppointment")
@@ -401,7 +414,7 @@ public class AdminController {
 		model.addAttribute("halls", halls);
 		model.addAttribute("trainings", trainings);
 
-		return "AddTrainingAppointment.html";
+		return "AddTrainingAppointment";
 	}
 
 	@PostMapping("addTrainingAppointment")
@@ -421,7 +434,7 @@ public class AdminController {
 			model.addAttribute("halls", halls);
 			model.addAttribute("trainings", trainings);
 			model.addAttribute("error", true);
-			return "AddTrainingAppointment.html";
+			return "AddTrainingAppointment";
 		}
 
 		return "redirect:/";
@@ -440,12 +453,12 @@ public class AdminController {
 			model.addAttribute("error", true);
 			ArrayList<Training> trainings = trainingRepository.findAll();
 			model.addAttribute("trainings", trainings);
-			return "Admin.html";
+			return "Admin";
 		}
 
 		model.addAttribute("comments", comments);
 
-		return "Comments.html";
+		return "Comments";
 	}
 
 	@PostMapping("accept")
@@ -459,7 +472,7 @@ public class AdminController {
 		if(commentService.acceptComment(commentRepository.findOne(id)) != null){
 			ArrayList<Comment> comments = commentRepository.findAll();
 			model.addAttribute("comments", comments);
-			return "Comments.html";
+			return "Comments";
 		}
 
 		return "redirect:/";
@@ -476,7 +489,7 @@ public class AdminController {
 		if(commentService.rejectComment(commentRepository.findOne(id)) != null){
 			ArrayList<Comment> comments = commentRepository.findAll();
 			model.addAttribute("comments", comments);
-			return "Comments.html";
+			return "Comments";
 		}
 
 		return "redirect:/";

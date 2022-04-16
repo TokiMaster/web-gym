@@ -23,6 +23,6 @@ public class TrainingController {
 	public String home(Model model) {
 		ArrayList<Training> trainings = trainingRepository.findAll();
 		model.addAttribute("trainings", trainings);
-		return "Home.html";
+		return "Home";
 	}
 }
