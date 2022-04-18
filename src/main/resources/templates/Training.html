@@ -62,7 +62,7 @@
 	Published on: <span th:text="${comment.date}"></span><br>
 	Comment: <span th:text="${comment.content}"></span><br>
 	Rating: <span th:text="${comment.rating}"></span><br>
-	<span th:if="${comment.author != null}" th:text="User: ${comment.author.username}"></span>
+	<span th:if="${comment.author != null}" th:text="${comment.author.username}"></span>
 	<span th:if="${comment.author == null}" >User: Anonymous</span>
 </p>
 </body>
