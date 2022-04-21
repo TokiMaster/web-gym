@@ -5,11 +5,10 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
-import home.Todor.OWPGym.Repository.CommentRepository;
-import home.Todor.OWPGym.Repository.TrainingAppointmentRepository;
-import home.Todor.OWPGym.Repository.WishListRepository;
+import home.Todor.OWPGym.Repository.*;
 import home.Todor.OWPGym.models.*;
 import home.Todor.OWPGym.service.CommentService;
+import home.Todor.OWPGym.service.LoyaltyCardService;
 import home.Todor.OWPGym.service.UserService;
 import home.Todor.OWPGym.service.WishListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import home.Todor.OWPGym.Repository.TrainingRepository;
 
 @Controller
 @RequestMapping("/member")
@@ -44,6 +41,12 @@ public class MemberController {
 
 	@Autowired
 	CommentRepository commentRepository;
+
+	@Autowired
+	LoyaltyCardService loyaltyCardService;
+
+	@Autowired
+	LoyaltyCardRepository loyaltyCardRepository;
 
 	@GetMapping
 	public String member(HttpSession session, Model model) {
@@ -221,7 +224,7 @@ public class MemberController {
 			wishListService.addToWishList(new WishList(loggedUser, training));
 		}
 
-		model.addAttribute("errors", true);
+		model.addAttribute("wishList", true);
 		return "redirect:/";
 	}
 
@@ -235,7 +238,7 @@ public class MemberController {
 
 		ArrayList<TrainingAppointment> appointments = (ArrayList<TrainingAppointment>) session.getAttribute("appointments");
 		if(appointments == null){
-			model.addAttribute("error", true);
+			model.addAttribute("cart", true);
 			ArrayList<Training> trainings = trainingRepository.findAll();
 			model.addAttribute("trainings", trainings);
 			return "Member";
@@ -279,7 +282,7 @@ public class MemberController {
 
 		ArrayList<WishList> wishLists = wishListRepository.findUsersWishList(loggedUser.getUsername());
 		if(wishLists == null){
-			model.addAttribute("errors",true);
+			model.addAttribute("wishList",true);
 			ArrayList<Training> trainings = trainingRepository.findAll();
 			model.addAttribute("trainings", trainings);
 			return "Member";
@@ -302,6 +305,37 @@ public class MemberController {
 		if(training != null){
 			wishListRepository.deleteFromWishList(training);
 			return "redirect:/member/wishList";
+		}
+
+		return "redirect:/";
+	}
+
+	@GetMapping("loyaltyCard")
+	public String loyaltyCard(HttpSession session, Model model){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.MEMBER ) {
+			return "redirect:/";
+		}
+
+		model.addAttribute("loyaltyCard", loyaltyCardRepository.findOneByUsername(loggedUser.getUsername()));
+
+		return "LoyaltyCard";
+	}
+
+	@PostMapping("createLoyaltyCard")
+	public String createLoyaltyCard(HttpSession session, Model model){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.MEMBER ) {
+			return "redirect:/";
+		}
+
+		if(loyaltyCardService.requestLoyaltyCard(new LoyaltyCard(loggedUser)) == null){
+			model.addAttribute("request", true);
+			ArrayList<Training> trainings = trainingRepository.findAll();
+			model.addAttribute("trainings", trainings);
+			return "Member";
 		}
 
 		return "redirect:/";

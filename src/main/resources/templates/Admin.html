@@ -9,8 +9,10 @@
 <a href="/admin/profileInfo">My profile</a><br>
 <a href="/admin/allUsers">All users</a><br>
 <a href="/admin/allHalls">All halls</a><br>
-<a href="/admin/comments">Comments</a>
-<h3 th:if="${error}">No comments to approve</h3>
+<a href="/admin/comments">Comments</a><br>
+<a href="/admin/loyaltyCards">Requests for loyalty cards</a>
+<h3 th:if="${comment}">No comments to approve</h3>
+<h3 th:if="${loyalty}">No loyalty cards requests</h3>
 <style>
 	.tb { border-collapse: collapse; }
 	.tb th, .tb td { padding: 5px; border: solid 1px #777; }

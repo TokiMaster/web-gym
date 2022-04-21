@@ -6,7 +6,9 @@
 </head>
 <body>
 <a href="/logout">Logout</a><br>
-<a href="/member/profileInfo">My profile</a>
+<a href="/member/profileInfo">My profile</a><br>
+<a href="/member/loyaltyCard">Loyalty card</a>
+<h3 th:if="${request}">Already applied for loyalty card</h3>
 <style>
 	.tb { border-collapse: collapse; }
 	.tb th, .tb td { padding: 5px; border: solid 1px #777; }
@@ -29,7 +31,7 @@
 </table>
 <a href="/member/cart">Cart</a><br>
 <a href="/member/wishList">Wish list</a>
-<h3 th:if="${error}">Nothing in cart</h3>
-<h3 th:if="${errors}">Nothing in wish list</h3>
+<h3 th:if="${cart}">Nothing in cart</h3>
+<h3 th:if="${wishList}">Nothing in wish list</h3>
 </body>
 </html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>LoyaltyCard</title>
+</head>
+<body>
+<a href="/logout">Logout</a><br>
+<a href="/member/profileInfo">My profile</a><br>
+<div th:if="${loyaltyCard} == null">
+    <form method="post" th:action="@{createLoyaltyCard}">
+        <input type="submit" value="Create loyalty card"/>
+    </form>
+</div>
+<div  th:if="${loyaltyCard} != null">
+    <span th:text="'User info: ' +${loyaltyCard.user.name} + ' ' + ${loyaltyCard.user.surname}"></span><br>
+    <span th:text="'Points: ' + ${loyaltyCard.points}"></span>
+</div>
+</body>
+</html>

@@ -26,11 +26,13 @@
         </tr>
         <tr>
             <th>Role: </th>
-            <td><select name="role" >
-                <option th:text="${user.role.name}"></option>
-                <option th:if="${user.role.name != 'MEMBER'}">MEMBER</option>
-                <option th:if="${user.role.name != 'ADMINISTRATOR'}">ADMINISTRATOR</option>
-            </select></td>
+            <td>
+                <select name="role" >
+                    <option th:text="${user.role.name}"></option>
+                    <option th:if="${user.role.name != 'MEMBER'}">MEMBER</option>
+                    <option th:if="${user.role.name != 'ADMINISTRATOR'}">ADMINISTRATOR</option>
+                </select>
+            </td>
         </tr>
         <tr>
             <th>Block user: </th>

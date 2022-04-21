@@ -51,6 +51,12 @@ public class AdminController {
 	@Autowired
 	CommentRepository commentRepository;
 
+	@Autowired
+	LoyaltyCardService loyaltyCardService;
+
+	@Autowired
+	LoyaltyCardRepository loyaltyCardRepository;
+
 	@GetMapping
 	public String admin(HttpSession session, Model model) {
 		User loggedUser = (User)session.getAttribute("user");
@@ -450,7 +456,7 @@ public class AdminController {
 
 		ArrayList<Comment> comments = commentRepository.findAll();
 		if(comments == null){
-			model.addAttribute("error", true);
+			model.addAttribute("comment", true);
 			ArrayList<Training> trainings = trainingRepository.findAll();
 			model.addAttribute("trainings", trainings);
 			return "Admin";
@@ -490,6 +496,60 @@ public class AdminController {
 			ArrayList<Comment> comments = commentRepository.findAll();
 			model.addAttribute("comments", comments);
 			return "Comments";
+		}
+
+		return "redirect:/";
+	}
+
+	@GetMapping("loyaltyCards")
+	public String loyaltyCards(HttpSession session, Model model){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		ArrayList<LoyaltyCard> loyaltyCards = loyaltyCardRepository.findAll();
+		if(loyaltyCards == null){
+			model.addAttribute("loyalty", true);
+			ArrayList<Training> trainings = trainingRepository.findAll();
+			model.addAttribute("trainings", trainings);
+			return "Admin";
+		}
+		model.addAttribute("loyaltyCards", loyaltyCardRepository.findAll());
+
+		return "LoyaltyCards";
+	}
+
+	@PostMapping("acceptLoyaltyCard")
+	public String acceptLoyaltyCard(HttpSession session, Model model, @RequestParam("id") int id){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		if(loyaltyCardService.acceptLoyaltyCard(loyaltyCardRepository.findOne(id)) != null){
+			ArrayList<LoyaltyCard> loyaltyCards = loyaltyCardRepository.findAll();
+			model.addAttribute("loyaltyCards", loyaltyCards);
+			return "LoyaltyCards";
+		}
+
+		return "redirect:/";
+	}
+
+	@PostMapping("rejectLoyaltyCard")
+	public String rejectLoyaltyCard(HttpSession session, Model model, @RequestParam("id") int id){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.ADMINISTRATOR ) {
+			return "redirect:/";
+		}
+
+		if(loyaltyCardService.rejectLoyaltyCard(loyaltyCardRepository.findOne(id)) != null){
+			ArrayList<LoyaltyCard> loyaltyCards = loyaltyCardRepository.findAll();
+			model.addAttribute("loyaltyCards", loyaltyCards);
+			return "LoyaltyCards";
 		}
 
 		return "redirect:/";
