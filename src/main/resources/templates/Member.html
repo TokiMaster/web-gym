@@ -2,36 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Member</title>
+	<title th:text="#{member}"></title>
 </head>
 <body>
-<a href="/logout">Logout</a><br>
-<a href="/member/profileInfo">My profile</a><br>
-<a href="/member/loyaltyCard">Loyalty card</a>
-<h3 th:if="${request}">Already applied for loyalty card</h3>
+<a th:href="@{?lang=sr}" th:text="#{serbia}"></a>
+<a th:href="@{?lang=en}" th:text="#{english}"></a><br>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a href="/member/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/member/loyaltyCard" th:text="#{loyatyCard}"></a>
+<h3 th:if="${request}" th:text="#{loyalty.error}"></h3>
 <style>
 	.tb { border-collapse: collapse; }
 	.tb th, .tb td { padding: 5px; border: solid 1px #777; }
 	.tb th { background-color: lightblue; }
 </style>
 <table class="tb">
-	<caption>All trainings</caption>
+	<caption th:text="#{allTrainings}"></caption>
 	<tr>
-		<th>Name</th>
-		<th>Instructor</th>
-		<th>Price</th>
-		<th>More info</th>
+		<th th:text="#{table.trainingName}"></th>
+		<th th:text="#{table.trainingInstructor}"></th>
+		<th th:text="#{table.trainingPrice}"></th>
+		<th th:text="#{moreInfo}"></th>
 	</tr>
 	<tr th:each="training : ${trainings}">
 		<td th:text="${training.name}"></td>
 		<td th:text="${training.instructor}"></td>
 		<td th:text="${training.price}"></td>
-		<td><a th:href="@{|/member/trainingInfo?id=${training.id}|}">Details</a></td>
+		<td><a th:href="@{|/member/trainingInfo?id=${training.id}|}" th:text="#{details}"></a></td>
 	</tr>
 </table>
-<a href="/member/cart">Cart</a><br>
-<a href="/member/wishList">Wish list</a>
-<h3 th:if="${cart}">Nothing in cart</h3>
-<h3 th:if="${wishList}">Nothing in wish list</h3>
+<a href="/member/cart" th:text="#{cart}"></a><br>
+<a href="/member/wishList" th:text="#{wishList}"></a>
+<h3 th:if="${cart}" th:text="#{cart.error}"></h3>
+<h3 th:if="${wishList}" th:text="#{wishList.error}"></h3>
 </body>
 </html>

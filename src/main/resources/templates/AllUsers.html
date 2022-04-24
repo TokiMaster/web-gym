@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>All users</title>
+    <title th:text="#{allUsers}"></title>
 </head>
 <body>
 <style>
@@ -10,15 +10,15 @@
     .tb th, .tb td { padding: 5px; border: solid 1px #777; }
     .tb th { background-color: lightblue; }
 </style>
-<a href="/logout">Logout</a><br>
-<a href="/admin/profileInfo">My profile</a><br>
-<a href="/">Home</a><br>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a href="/admin/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/" th:text="#{homePage}"></a><br>
 <table class="tb">
-    <caption>All users</caption>
+    <caption th:text="#{allUsers}"></caption>
     <tr>
-        <th>Username</th>
-        <th>Role</th>
-        <th>Registration date</th>
+        <th th:text="#{table.username}"></th>
+        <th th:text="#{table.userRole}"></th>
+        <th th:text="#{table.registrationDate}"></th>
     </tr>
     <tr th:each="user : ${users}">
         <td><a th:text="${user.username}" th:href="@{|/admin/allUsers/userInfo?id=${user.username}|}"></a></td>

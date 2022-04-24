@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit training</title>
+    <title th:text="#{editTraining}"></title>
 </head>
 <body>
 <style>
@@ -10,31 +10,31 @@
     .tb th, .tb td { padding: 5px; border: solid 1px #777; }
     .tb th { background-color: lightblue; }
 </style>
-<a href="/logout">Logout</a><br>
-<a href="/admin/profileInfo">My profile</a><br>
-<a href="/">Home</a><br>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a href="/admin/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/" th:text="#{homePage}"></a><br>
 <form method="post" th:action="@{editTraining}">
 <input type="hidden" name="id" th:value="${training.id}">
     <table class="tb">
-        <caption>Edit training</caption>
+        <caption th:text="#{editTraining}"></caption>
         <tr>
-            <th>Name:</th>
+            <th th:text="#{table.trainingName}"></th>
             <td><input type="text" name="name" th:value="${training.name}" required/></td>
         </tr>
         <tr>
-            <th>Instructor:</th>
+            <th th:text="#{table.trainingInstructor}"></th>
             <td><input type="text" name="instructor" th:value="${training.instructor}" required/></td>
         </tr>
         <tr>
-            <th>Description:</th>
+            <th th:text="#{table.trainingDescription}"></th>
             <td><textarea rows="4" cols="40"  name="description" th:text="${training.description}" required></textarea></td>
         </tr>
         <tr>
-            <th>Photo:</th>
+            <th th:text="#{table.trainingPhoto}"></th>
             <td><input type="file" name="photo" accept="photo/png, photo/jpeg" /></td>
         </tr>
         <tr>
-            <th>Type of training:</th>
+            <th th:text="#{table.typeOfTraining}"></th>
             <td><select name="typeOfTraining">
                     <option th:text="${training.typeOfTraining.name}"></option>
                     <option th:if="${training.typeOfTraining.name != 'Bodybuilding'}">Bodybuilding</option>
@@ -43,11 +43,11 @@
             </td>
         </tr>
         <tr>
-            <th>Price:</th>
+            <th th:text="#{table.trainingPrice}"></th>
             <td><input type="number" name="price" min="0" th:value="${training.price}" required/></td>
         </tr>
         <tr>
-            <th>Type of training</th>
+            <th th:text="#{table.trainingType}"></th>
             <td><select name="type" >
                     <option th:text="${training.trainingType.name}"></option>
                     <option th:if="${training.trainingType.name != 'INDIVIDUAL'}">INDIVIDUAL</option>
@@ -56,7 +56,7 @@
             </td>
         </tr>
         <tr>
-            <th>Training intensity</th>
+            <th th:text="#{table.trainingIntensity}"></th>
             <td><select name="intensity">
                     <option th:text="${training.trainingLVL.name}"></option>
                     <option th:if="${training.trainingLVL.name != 'AMATEUR'}">AMATEUR</option>
@@ -66,15 +66,15 @@
             </td>
         </tr>
         <tr>
-            <th>Duration:</th>
+            <th th:text="#{table.trainingDuration}"></th>
             <td><input type="number" name="duration" min="1" th:value="${training.duration}" required/></td>
         </tr>
         <tr>
             <th></th>
-            <td><input type="submit" value="Save" /></td>
+            <td><input type="submit" th:value="#{save}" /></td>
         </tr>
     </table>
 </form>
-<h3 th:if="${error}">Something went wrong</h3>
+<h3 th:if="${error}" th:text="#{error}"></h3>
 </body>
 </html>

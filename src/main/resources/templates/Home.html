@@ -2,24 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Home page</title>
+	<title th:text="#{homePage}"></title>
 </head>
 <body>
-<a href="login">Login</a><br>
-<a href="registration">Register now!</a>
+<a href="login" th:text="#{login}"></a><br>
+<a href="registration" th:text="#{register}"></a>
 <style>
 	.tb { border-collapse: collapse; }
 	.tb th, .tb td { padding: 5px; border: solid 1px #777; }
 	.tb th { background-color: lightblue; }
 </style>
 <table class="tb">
-	<caption>All trainings</caption>
+	<caption th:text="#{allTrainings}"></caption>
 	<tr>
-		<th>Name</th>
-		<th>Instructor</th>
-		<th>Description</th>
-		<th>Type of training</th>
-		<th>Price</th>
+		<th th:text="#{table.trainingName}"></th>
+		<th th:text="#{table.trainingInstructor}"></th>
+		<th th:text="#{table.trainingDescription}"></th>
+		<th th:text="#{table.typeOfTraining}"></th>
+		<th th:text="#{table.trainingPrice}"></th>
 	</tr>
 	<tr th:each="training : ${trainings}">
 		<td th:text="${training.name}"></td>

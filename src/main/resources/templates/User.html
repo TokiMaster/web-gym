@@ -2,22 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User details</title>
+    <title th:text="#{userDetails}"></title>
 </head>
 <body>
-<a href="/logout">Logout</a><br>
-<a href="/admin/profileInfo">My profile</a><br>
-<a href="/">Home</a><br>
-    Username: <span th:text="${user.username}"></span><br>
-    Email: <span th:text="${user.email}"></span><br>
-    Name: <span th:text="${user.name}"></span><br>
-    Surname: <span th:text="${user.surname}"></span><br>
-    Date of birth: <span th:text="${user.dateOfBirth}"></span><br>
-    Address: <span th:text="${user.address}"></span><br>
-    Phone number: <span th:text="${user.phoneNumber}"></span><br>
-    Registration date: <span th:text="${user.registrationDate}"></span><br>
-    Role: <span th:text="${user.role.name}"></span><br>
-    Is blocked: <span th:text="${user.isBlocked}"></span><br>
-    <a th:href="@{|editUser?id=${user.username}|}">Edit user</a>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a href="/admin/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/" th:text="#{homePage}"></a><br>
+    <span th:text="#{username} + ${user.username}"></span><br>
+    <span th:text="#{email} + ${user.email}"></span><br>
+    <span th:text="#{name} + ${user.name}"></span><br>
+    <span th:text="#{surname} + ${user.surname}"></span><br>
+    <span th:text="#{dateOfBirth} + ${user.dateOfBirth}"></span><br>
+    <span th:text="#{address} + ${user.address}"></span><br>
+    <span th:text="#{phoneNumber} + ${user.phoneNumber}"></span><br>
+    <span th:text="#{registrationDate} + ${user.registrationDate}"></span><br>
+    <span th:text="#{userRole} + ${user.role.name}"></span><br>
+    <span th:text="#{isBlocked} + ${user.isBlocked}"></span><br>
+    <a th:href="@{|editUser?id=${user.username}|}" th:text="#{editUser}"></a>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add new appointment</title>
+    <title th:text="#{addAppointment}"></title>
 </head>
 <body>
 <style>
@@ -10,37 +10,38 @@
     .tb th, .tb td { padding: 5px; border: solid 1px #777; }
     .tb th { background-color: lightblue; }
 </style>
-<a href="/logout">Logout</a><br>
-<a href="/admin/profileInfo">My profile</a><br>
-<a href="/">Home</a><br>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a href="/admin/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/" th:text="#{homePage}"></a><br>
 <form method="post" th:action="@{addTrainingAppointment}">
     <table class="tb">
+        <caption th:text="#{addAppointment}"></caption>
         <tr>
-            <th>Hall: </th>
+            <th th:text="#{table.hall}"></th>
             <td><select name="hall" required>
-                <option disabled selected> -- select a hall -- </option>
+                <option disabled selected th:text="#{table.selectHall}"></option>
                 <option th:each="hall : ${halls}" th:text="${hall.hallName}" th:value="${hall.id}"></option>
                 </select>
             </td>
         </tr>
         <tr>
-            <th>Training: </th>
+            <th th:text="#{table.training}"></th>
             <td><select name="training" required>
-                <option disabled selected> -- select a training -- </option>
+                <option disabled selected th:text="#{table.selectTraining}"></option>
                 <option th:each="training : ${trainings}" th:text="${training.name}" th:value="${training.id}"></option>
             </select>
             </td>
         </tr>
         <tr>
-            <th>Start date: </th>
+            <th th:text="#{table.startDate}"></th>
             <td><input type="datetime-local" name="startDate" required></td>
         </tr>
         <tr>
             <th></th>
-            <td><input type="submit" value="Add appointment"/></td>
+            <td><input type="submit" th:value="#{addAppointment}"/></td>
         </tr>
     </table>
 </form>
-<h3 th:if="${error}">Something went wrong</h3>
+<h3 th:if="${error}" th:text="#{error}"></h3>
 </body>
 </html>

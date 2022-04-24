@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
-    <title>Edit profile</title>
+    <title th:text="#{editProfile}"></title>
 </head>
 <body>
 <style>
@@ -11,59 +10,59 @@
     .tb th, .tb td { padding: 5px; border: solid 1px #777; }
     .tb th { background-color: lightblue; }
 </style>
-<a href="/logout">Logout</a><br>
-<a th:if="${user.role.name == 'MEMBER'}" href="/member/profileInfo">My profile</a>
-<a th:if="${user.role.name == 'ADMINISTRATOR'}" href="/admin/profileInfo">My profile</a><br>
-<a href="/">Home</a><br>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a th:if="${user.role.name == 'MEMBER'}" href="/member/profileInfo" th:text="#{myProfile}"></a>
+<a th:if="${user.role.name == 'ADMINISTRATOR'}" href="/admin/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/" th:text="#{homePage}"></a><br>
 <form method="post" th:action="@{editProfile}">
     <table class="tb">
-        <caption>Edit profile</caption>
+        <caption th:text="#{editProfile}"></caption>
         <tr>
-            <th>Username: </th>
+            <th th:text="#{table.username}"></th>
             <td><span th:text="${user.username}"></span></td>
         </tr>
         <tr>
-            <th>Email: </th>
+            <th th:text="#{table.email}"></th>
             <td> <input type="email" name="email" th:value="${user.email}"/></td>
         </tr>
         <tr>
-            <th>Name: </th>
+            <th th:text="#{table.name}"></th>
             <td><input type="text" name="name" th:value="${user.name}"/></td>
         </tr>
         <tr>
-            <th>Surname: </th>
+            <th th:text="#{table.surname}"></th>
             <td><input type="text" name="surname" th:value="${user.surname}"/></td>
         </tr>
         <tr>
-            <th>Date of birth: </th>
+            <th th:text="#{table.dateOfBirth}"></th>
             <td><input type="datetime-local" name="dateOfBirth" th:value="${user.dateOfBirth}"/></td>
         </tr>
         <tr>
-            <th>Address:</th>
+            <th th:text="#{table.address}"></th>
             <td><input type="text" name="address" th:value="${user.address}"/></td>
         </tr>
         <tr>
-            <th>Phone number: </th>
+            <th th:text="#{table.phoneNumber}"></th>
             <td><input type="text" name="phoneNumber" th:value="${user.phoneNumber}"/></td>
         </tr>
         <tr>
-            <th>Registration date: </th>
+            <th th:text="#{table.registrationDate}"></th>
             <td><span th:text="${user.registrationDate}"></span></td>
         </tr>
         <tr>
-            <th>New password: </th>
+            <th th:text="#{newPassword}"></th>
             <td><input type="password" name="newPassword"/></td>
         </tr>
         <tr>
-            <th>Confirm new password: </th>
+            <th th:text="#{newPasswordRepeated}"></th>
             <td><input type="password" name="repeatNewPassword"/></td>
         </tr>
         <tr>
             <th></th>
-            <td><input type="submit" value="Save" /></td>
+            <td><input type="submit" th:value="#{save}" /></td>
         </tr>
     </table>
 </form>
-<h3 th:if="${error}">Something went wrong</h3>
+<h3 th:if="${error}" th:text="#{error}"></h3>
 </body>
 </html>

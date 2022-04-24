@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Hall</title>
+    <title th:text="#{editHall}"></title>
 </head>
 <body>
 <style>
@@ -10,27 +10,27 @@
     .tb th, .tb td { padding: 5px; border: solid 1px #777; }
     .tb th { background-color: lightblue; }
 </style>
-<a href="/logout">Logout</a><br>
-<a href="/admin/profileInfo">My profile</a><br>
-<a href="/">Home</a><br>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a href="/admin/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/" th:text="#{homePage}"></a><br>
 <form method="post" th:action="@{editHall}">
     <input type="hidden" name="id" th:value="${hall.id}">
     <table class="tb">
-        <caption>Edit hall</caption>
+        <caption th:text="#{editHall}"></caption>
         <tr>
-            <th>Hall name</th>
+            <th th:text="#{hallName}"></th>
             <td><span th:text="${hall.hallName}"></span></td>
         </tr>
         <tr>
-            <th>Capacity: </th>
+            <th th:text="#{hallCapacity}"></th>
             <td><input type="number" min="1" name="capacity" required th:value="${hall.capacity}"></td>
         </tr>
         <tr>
             <th></th>
-            <td><input type="submit" value="Save"/></td>
+            <td><input type="submit" th:value="#{save}"/></td>
         </tr>
     </table>
 </form>
-<h3 th:if="${error}">Something went wrong</h3>
+<h3 th:if="${error}" th:text="#{error}"></h3>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit user</title>
+    <title th:text="#{editUser}"></title>
 </head>
 <body>
 <style>
@@ -10,22 +10,22 @@
     .tb th, .tb td { padding: 5px; border: solid 1px #777; }
     .tb th { background-color: lightblue; }
 </style>
-<a href="/logout">Logout</a><br>
-<a href="/admin/profileInfo">My profile</a><br>
-<a href="/">Home</a><br>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a href="/admin/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/" th:text="#{homePage}"></a><br>
 <form method="post" th:action="@{editUser}">
     <table class="tb">
-        <caption>Edit user</caption>
+        <caption th:text="#{editUser}"></caption>
         <tr>
-            <th>Username: </th>
+            <th th:text="#{table.username}"></th>
             <td><span th:text="${user.username}"></span><input type="hidden" name="username" th:value="${user.username}"/></td>
         </tr>
         <tr>
-            <th>Registration date: </th>
+            <th th:text="#{table.registrationDate}"></th>
             <td><span th:text="${user.registrationDate}"></span></td>
         </tr>
         <tr>
-            <th>Role: </th>
+            <th th:text="#{table.userRole}"></th>
             <td>
                 <select name="role" >
                     <option th:text="${user.role.name}"></option>
@@ -35,12 +35,12 @@
             </td>
         </tr>
         <tr>
-            <th>Block user: </th>
+            <th th:text="#{blockUser}"></th>
             <td><input type="checkbox" name="block" th:checked="${user.isBlocked}" /></td>
         </tr>
         <tr>
             <th></th>
-            <td><input type="submit" value="Save" /></td>
+            <td><input type="submit" th:value="#{save}" /></td>
         </tr>
     </table>
 </form>

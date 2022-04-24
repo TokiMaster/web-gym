@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Halls</title>
+    <title th:text="#{halls}"></title>
 </head>
 <body>
 <style>
@@ -10,14 +10,14 @@
     .tb th, .tb td { padding: 5px; border: solid 1px #777; }
     .tb th { background-color: lightblue; }
 </style>
-<a href="/logout">Logout</a><br>
-<a href="/admin/profileInfo">My profile</a><br>
-<a href="/">Home</a><br>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a href="/admin/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/" th:text="#{homePage}"></a><br>
 <table class="tb">
-    <caption>All halls</caption>
+    <caption th:text="#{halls}"></caption>
     <tr>
-        <th>Hall name</th>
-        <th>Capacity</th>
+        <th th:text="#{hallName}"></th>
+        <th th:text="#{hallCapacity}"></th>
     </tr>
     <tr th:each="hall : ${halls}">
         <td><a th:text="${hall.hallName}" th:href="@{|allHalls/editHall?id=${hall.id}|}"></a></td>

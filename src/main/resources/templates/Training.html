@@ -2,46 +2,46 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Training</title>
+	<title th:text="#{table.training}"></title>
 </head>
 <body>
-<a href="/logout">Logout</a><br>
-<a th:if="${user.role.name == 'ADMINISTRATOR'}" href="/admin/profileInfo">My profile</a>
-<a th:if="${user.role.name == 'MEMBER'}" href="/member/profileInfo">My profile</a><br>
-<a href="/">Home</a><br>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a th:if="${user.role.name == 'ADMINISTRATOR'}" href="/admin/profileInfo" th:text="#{myProfile}"></a>
+<a th:if="${user.role.name == 'MEMBER'}" href="/member/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/" th:text="#{homePage}"></a><br>
 <form method="post" th:action="@{addToCart}">
-	Name: <span th:text="${training.name}"></span><br>
-	Instructor: <span th:text="${training.instructor}"></span><br>
-	Description: <span th:text="${training.description}"></span><br>
-	Photo: <img th:src="${training.photo}"/><br>
-	Type of training: <span th:text="${training.typeOfTraining}"></span><br>
-	Description: <span th:text="${training.typeOfTraining.description}"></span><br>
-	Price: <span th:text="${training.price}"></span><br>
-	Type of training: <span th:text="${training.trainingType}"></span><br>
-	Training intensity: <span th:text="${training.trainingLVL}"></span><br>
-	Training date:
+	<span th:text="#{trainingName} + ${training.name}"></span><br>
+	<span th:text="#{trainingInstructor} + ${training.instructor}"></span><br>
+	<span th:text="#{trainingDescription} + ${training.description}"></span><br>
+	[[#{trainingPhoto}]] <img th:src="${training.photo}"/><br>
+	<span th:text="#{typeOfTraining} + ${training.typeOfTraining}"></span><br>
+	<span th:text="#{trainingDescription} + ${training.typeOfTraining.description}"></span><br>
+	<span th:text="#{trainingPrice} + ${training.price}"></span><br>
+	<span th:text="#{trainingType} + ${training.trainingType}"></span><br>
+	<span th:text="#{trainingIntensity} + ${training.trainingLVL}"></span><br>
+	[[#{trainingDate}]]
 	<select name="id">
 		<option th:each="appointment : ${appointments}" th:text="${appointment.startDate}" th:value="${appointment.id}"></option>
 	</select>
 	<br>
-	Duration: <span th:text="${training.duration}"></span><br>
-	<button th:if="${user.role.name == 'MEMBER'}" type="submit">Add to shopping cart</button>
+	<span th:text="#{trainingDuration} + ${training.duration}"></span><br>
+	<button th:if="${user.role.name == 'MEMBER'}" type="submit" th:text="#{addShoppingCart}"></button>
 </form>
 <form method="post" th:action="@{addToWishList}">
 	<input type="hidden" name="trainingId" th:value="${training.id}">
-	<button th:if="${user.role.name == 'MEMBER'}" type="submit">Add to wish list</button>
+	<button th:if="${user.role.name == 'MEMBER'}" type="submit" th:text="#{addWishList}"></button>
 </form>
-<h3 th:if="${error}">Already in cart</h3>
-<h3 th:if="${errors}">Already in wish list</h3>
-<a th:if="${user.role.name == 'ADMINISTRATOR'}" th:href="@{|/admin/editTraining?id=${training.id}|}">Edit training</a>
+<h3 th:if="${error}" th:text="#{alreadyInCart}"></h3>
+<h3 th:if="${wishList}" th:text="#{alreadyInWishList}"></h3>
+<a th:if="${user.role.name == 'ADMINISTRATOR'}" th:href="@{|/admin/editTraining?id=${training.id}|}" th:text="#{editTraining}"></a>
 <br>
 <br>
 <br>
 <br>
 <form th:if="${user.role.name == 'MEMBER'}" method="post" th:action="@{postComment}">
 	<input type="hidden" name="training" th:value="${training.id}">
-	Leave a comment: <br> <textarea rows="3" cols="40" name="content" required></textarea><br>
-	Rate this training:
+	[[#{leaveComment}]] <br> <textarea rows="3" cols="40" name="content" required></textarea><br>
+	[[#{rateTraining}]]
 	<select name="rating" required>
 		<option value="1">1</option>
 		<option value="2">2</option>
@@ -49,21 +49,21 @@
 		<option value="4">4</option>
 		<option value="5">5</option>
 	</select><br>
-	Anonymous: <input type="checkbox" name="anonymous"><br>
-	<input type="submit" value="Publish comment" />
+	[[#{anonymous}]] <input type="checkbox" name="anonymous"><br>
+	<input type="submit" th:value="#{publishComment}" />
 </form>
-<h2 th:if="${error}">Comment must not be empty</h2>
+<h2 th:if="${error}" th:text="#{commentError}"></h2>
 <br>
 <br>
 <br>
 <br>
-<h2>Comment section</h2>
+<h2 th:text="#{commentSection}"></h2>
 <p th:each="comment : ${comments}">
-	Published on: <span th:text="${comment.date}"></span><br>
-	Comment: <span th:text="${comment.content}"></span><br>
-	Rating: <span th:text="${comment.rating}"></span><br>
-	<span th:if="${comment.author != null}" th:text="'User: ' + ${comment.author.username}"></span>
-	<span th:if="${comment.author == null}" >User: Anonymous</span>
+	<span th:text="#{publishedDate} + ${comment.date}"></span><br>
+	<span th:text="#{comment} + ${comment.content}"></span><br>
+	<span th:text="#{rating} + ${comment.rating}"></span><br>
+	<span th:if="${comment.author != null}" th:text="#{userAnonymous} + ${comment.author.username}"></span>
+	<span th:if="${comment.author == null}" th:text="#{commentAuthorAnonymous}"></span>
 </p>
 </body>
 </html>

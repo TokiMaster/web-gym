@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Loyalty Cards</title>
+    <title th:text="#{loyaltyCards}"></title>
 </head>
 <body>
 <style>
@@ -10,15 +10,15 @@
     .tb th, .tb td { padding: 5px; border: solid 1px #777; }
     .tb th { background-color: lightblue; }
 </style>
-<a href="/logout">Logout</a><br>
-<a href="/admin/profileInfo">My profile</a><br>
-<a href="/">Home</a><br>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a href="/admin/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/" th:text="#{homePage}"></a><br>
 <table class="tb">
-    <caption>Loyalty card requests</caption>
+    <caption th:text="#{admin.loyalty}"></caption>
     <tr>
-        <th>User</th>
-        <th>Points</th>
-        <th>Status</th>
+        <th th:text="#{user}"></th>
+        <th th:text="#{loyaltyPoints}"></th>
+        <th th:text="#{status}"></th>
         <th></th>
         <th></th>
     </tr>
@@ -29,13 +29,13 @@
         <td>
             <form method="post" th:action="@{acceptLoyaltyCard}">
                 <input type="hidden" name="id" th:value="${loyaltyCard.id}">
-                <input type="submit" value="Accept" />
+                <input type="submit"  th:value="#{accept}" />
             </form>
         </td>
         <td>
             <form method="post" th:action="@{rejectLoyaltyCard}">
                 <input type="hidden" name="id" th:value="${loyaltyCard.id}">
-                <input type="submit" value="Reject" />
+                <input type="submit"  th:value="#{reject}" />
             </form>
         </td>
     </tr>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Cart</title>
+  <title th:text="#{cart}"></title>
 </head>
 <body>
 <style>
@@ -10,17 +10,17 @@
   .tb th, .tb td { padding: 5px; border: solid 1px #777; }
   .tb th { background-color: lightblue; }
 </style>
-<a href="/logout">Logout</a><br>
-<a href="/member/profileInfo">My profile</a><br>
-<a href="/">Home</a><br>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a href="/member/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/" th:text="#{homePage}"></a><br>
 <table class="tb">
-  <caption>Cart</caption>
+  <caption th:text="#{cart}"></caption>
   <tr>
-    <th>Name</th>
-    <th>Instructor</th>
-    <th>Type of training</th>
-    <th>Start date</th>
-    <th>Price</th>
+    <th th:text="#{table.trainingName}"></th>
+    <th th:text="#{table.trainingInstructor}"></th>
+    <th th:text="#{table.typeOfTraining}"></th>
+    <th th:text="#{table.startDate}"></th>
+    <th th:text="#{table.trainingPrice}"></th>
     <th></th>
   </tr>
   <tr th:each="training : ${appointments}" >
@@ -31,14 +31,14 @@
     <td th:text="${training.getTraining().getPrice()}"></td>
     <form method="post" th:action="@{removeFromCart}">
       <input type="hidden" name="remove" th:value="${training.getId()}" />
-      <td><input type="submit" value="Remove"/></td>
+      <td><input type="submit" th:value="#{remove}"/></td>
     </form>
   </tr>
   <tr>
     <td></td>
     <td></td>
     <td></td>
-    <td>Total:</td>
+    <td th:text="#{total}"></td>
     <td th:text="${total}"></td>
     <td></td>
   </tr>

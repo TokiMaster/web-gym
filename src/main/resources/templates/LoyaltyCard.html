@@ -2,19 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>LoyaltyCard</title>
+    <title th:text="#{loyatyCard}"></title>
 </head>
 <body>
-<a href="/logout">Logout</a><br>
-<a href="/member/profileInfo">My profile</a><br>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a href="/member/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/" th:text="#{homePage}"></a><br>
 <div th:if="${loyaltyCard} == null">
     <form method="post" th:action="@{createLoyaltyCard}">
-        <input type="submit" value="Create loyalty card"/>
+        <input type="submit" th:value="#{createCard}"/>
     </form>
 </div>
 <div  th:if="${loyaltyCard} != null">
-    <span th:text="'User info: ' +${loyaltyCard.user.name} + ' ' + ${loyaltyCard.user.surname}"></span><br>
-    <span th:text="'Points: ' + ${loyaltyCard.points}"></span>
+    <span th:text="#{userInfo} + ${loyaltyCard.user.name} + ' ' + ${loyaltyCard.user.surname}"></span><br>
+    <span th:text="#{loyaltyPoints} + ': ' + ${loyaltyCard.points}"></span>
 </div>
 </body>
 </html>

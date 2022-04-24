@@ -2,38 +2,39 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Admin page</title>
+	<title th:text="#{admin.page}"></title>
 </head>
 <body>
-<a href="/logout">Logout</a><br>
-<a href="/admin/profileInfo">My profile</a><br>
-<a href="/admin/allUsers">All users</a><br>
-<a href="/admin/allHalls">All halls</a><br>
-<a href="/admin/comments">Comments</a><br>
-<a href="/admin/loyaltyCards">Requests for loyalty cards</a>
-<h3 th:if="${comment}">No comments to approve</h3>
-<h3 th:if="${loyalty}">No loyalty cards requests</h3>
+<a th:href="@{?lang=sr}" th:text="#{serbia}"></a>
+<a th:href="@{?lang=en}" th:text="#{english}"></a><br>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a href="/admin/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/admin/allUsers" th:text="#{admin.allUsers}"></a><br>
+<a href="/admin/allHalls" th:text="#{admin.allHalls}"></a><br>
+<a href="/admin/comments" th:text="#{admin.comments}"></a><br>
+<a href="/admin/loyaltyCards" th:text="#{admin.loyalty}"></a>
+<h3 th:if="${comment}" th:text="#{admin.commentError}"></h3>
+<h3 th:if="${loyalty}" th:text="#{admin.loyaltyError}"></h3>
 <style>
 	.tb { border-collapse: collapse; }
 	.tb th, .tb td { padding: 5px; border: solid 1px #777; }
 	.tb th { background-color: lightblue; }
 </style>
 <table class="tb">
-	<caption>All trainings</caption>
+	<caption th:text="#{allTrainings}"></caption>
 	<tr>
-		<th>Name</th>
-		<th>Instructor</th>
-		<th>Description</th>
-		<th>Photo</th>
-		<th>Type of training</th>
-		<th>Price</th>
-		<th>Training type</th>
-		<th>Training intensity</th>
-		<th>Duration</th>
-		<th>Average rating</th>
+		<th th:text="#{table.trainingName}"></th>
+		<th th:text="#{table.trainingInstructor}"></th>
+		<th th:text="#{table.trainingDescription}"></th>
+		<th th:text="#{table.trainingPhoto}"></th>
+		<th th:text="#{table.typeOfTraining}"></th>
+		<th th:text="#{table.trainingPrice}"></th>
+		<th th:text="#{table.trainingType}"></th>
+		<th th:text="#{table.trainingIntensity}"></th>
+		<th th:text="#{table.trainingDuration}"></th>
+		<th th:text="#{table.trainingRating}"></th>
 	</tr>
 	<tr th:each="training : ${trainings}">
-<!--		<input type="hidden" name="id" th:value="${training.id}">-->
 		<td><a th:text="${training.name}" th:href="@{|/admin/trainingInfo?id=${training.id}|}"></a></td>
 		<td th:text="${training.instructor}"></td>
 		<td th:text="${training.description}"></td>
@@ -46,8 +47,8 @@
 		<td th:text="${training.averageRating}"></td>
 	</tr>
 </table>
-<br><a href="/admin/addTraining">Add new training</a>
-<br><a href="/admin/addHall">Add new hall</a>
-<br><a href="/admin/addTrainingAppointment">Add new training appointment</a>
+<br><a href="/admin/addTraining" th:text="#{admin.addTraining}"></a>
+<br><a href="/admin/addHall" th:text="#{admin.addHall}"></a>
+<br><a href="/admin/addTrainingAppointment" th:text="#{admin.addTrainingAppointment}"></a>
 </body>
 </html>

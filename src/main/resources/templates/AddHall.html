@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add hall</title>
+    <title th:text="#{addHall}"></title>
 </head>
 <body>
 <style>
@@ -10,25 +10,26 @@
     .tb th, .tb td { padding: 5px; border: solid 1px #777; }
     .tb th { background-color: lightblue; }
 </style>
-<a href="/logout">Logout</a><br>
-<a href="/admin/profileInfo">My profile</a><br>
-<a href="/">Home</a><br>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a href="/admin/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/" th:text="#{homePage}"></a><br>
 <form method="post" th:action="@{addHall}">
     <table class="tb">
+        <caption th:text="#{addHall}"></caption>
         <tr>
-            <th>Hall name: </th>
+            <th th:text="#{hallName}"></th>
             <td><input type="text" name="hallName" required></td>
         </tr>
         <tr>
-            <th>Capacity: </th>
+            <th th:text="#{hallCapacity}"></th>
             <td><input type="number" min="1" name="capacity" required></td>
         </tr>
         <tr>
             <th></th>
-            <td><input type="submit" value="Add hall"/></td>
+            <td><input type="submit" th:value="#{addHall}"/></td>
         </tr>
     </table>
 </form>
-<h3 th:if="${error}">Something went wrong</h3>
+<h3 th:if="${error}" th:text="#{error}"></h3>
 </body>
 </html>

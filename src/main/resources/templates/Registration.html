@@ -2,52 +2,57 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Registration</title>
+    <title th:text="#{registration}"></title>
 </head>
 <body>
+<style>
+    .tb { border-collapse: collapse; }
+    .tb th, .tb td { padding: 5px; border: solid 1px #777; }
+    .tb th { background-color: lightblue; }
+</style>
 <form method="post" action="/registration">
-    <table>
-        <caption>Registration</caption>
+    <table class="tb">
+        <caption th:text="#{registration}"></caption>
         <tr>
-            <th>Username:</th>
+            <th th:text="#{table.username}"></th>
             <td><input type="text" name="username" required/></td>
         </tr>
         <tr>
-            <th>Password:</th>
+            <th th:text="#{table.password}"></th>
             <td><input type="password" name="password" required/></td>
         </tr>
         <tr>
-            <th>Email:</th>
+            <th th:text="#{table.email}"></th>
             <td><input type="email" name="email" required
             pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"></td>
         </tr>
         <tr>
-            <th>Name:</th>
+            <th th:text="#{table.name}"></th>
             <td><input type="text" name="name" required/></td>
         </tr>
         <tr>
-            <th>Surname:</th>
+            <th th:text="#{table.surname}"></th>
             <td><input type="text" name="surname" required/></td>
         </tr>
         <tr>
-            <th>Date of birth:</th>
+            <th th:text="#{table.dateOfBirth}"></th>
             <td><input type="datetime-local" name="dateOfBirth" required/></td>
         </tr>
         <tr>
-            <th>Address:</th>
+            <th th:text="#{table.address}"></th>
             <td><input type="text" name="address" required/></td>
         </tr>
         <tr>
-            <th>Phone number:</th>
+            <th th:text="#{table.phoneNumber}"></th>
             <td><input type="text" name="phoneNumber" required/></td>
         </tr>
         <tr>
             <th></th>
-            <td><input type="submit" value="Register" /></td>
+            <td><input type="submit" th:value="#{button.register}" /></td>
         </tr>
     </table>
 </form>
-<h3 th:if="${error}">Something went wrong</h3>
-<a href="login">Already a member?</a>
+<h3 th:if="${error}" th:text="#{error}"></h3>
+<a href="login" th:text="#{alreadyMember}"></a>
 </body>
 </html>
