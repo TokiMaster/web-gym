@@ -40,7 +40,9 @@
     <td></td>
     <td th:text="#{total}"></td>
     <td th:text="${total}"></td>
-    <td></td>
+    <form method="post" th:action="@{cart/buy}">
+      <td><input type="submit" th:value="#{buy}"/></td>
+    </form>
   </tr>
 </table>
 </body>

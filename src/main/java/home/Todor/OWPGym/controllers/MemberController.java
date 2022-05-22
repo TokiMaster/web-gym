@@ -7,10 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import home.Todor.OWPGym.Repository.*;
 import home.Todor.OWPGym.models.*;
-import home.Todor.OWPGym.service.CommentService;
-import home.Todor.OWPGym.service.LoyaltyCardService;
-import home.Todor.OWPGym.service.UserService;
-import home.Todor.OWPGym.service.WishListService;
+import home.Todor.OWPGym.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -47,6 +44,12 @@ public class MemberController {
 
 	@Autowired
 	LoyaltyCardRepository loyaltyCardRepository;
+
+	@Autowired
+	ReservedAppointmentsService reservedAppointmentsService;
+
+	@Autowired
+	ReservedAppointmentsRepository reservedAppointmentsRepository;
 
 	@GetMapping
 	public String member(HttpSession session, Model model) {
@@ -252,6 +255,52 @@ public class MemberController {
 		model.addAttribute("total", total);
 
 		return "Cart";
+	}
+
+	@PostMapping("cart/buy")
+	public String buyTraining(HttpSession session, Model model){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.MEMBER ) {
+			return "redirect:/";
+		}
+
+		ArrayList<TrainingAppointment> appointments = (ArrayList<TrainingAppointment>) session.getAttribute("appointments");
+		int total = 0;
+		for(int i = 0; i < appointments.size(); i++){
+			reservedAppointmentsService.addToReservedAppointment(
+					new ReservedAppointment(loggedUser, trainingRepository.findOne(appointments.get(i).getTraining().getId())));
+			total += appointments.get(i).getTraining().getPrice();
+		}
+ 		LoyaltyCard loyaltyCard = loyaltyCardRepository.findOneByUsername(loggedUser.getUsername());
+		int points = loyaltyCard.getPoints() + total/500;
+		loyaltyCard.setPoints(points);
+		loyaltyCardService.addPoints(loyaltyCard);
+		session.removeAttribute("appointments");
+
+		return "redirect:/";
+	}
+
+	@GetMapping("reservedAppointments")
+	public String reservedAppointments(HttpSession session, Model model){
+		User loggedUser = (User)session.getAttribute("user");
+
+		if(loggedUser == null || loggedUser.getRole() != Role.MEMBER ) {
+			return "redirect:/";
+		}
+
+		ArrayList<ReservedAppointment> reservedAppointments = reservedAppointmentsRepository.findUsersReservedTrainings(loggedUser.getUsername());
+
+		if(reservedAppointments == null){
+			model.addAttribute("reservedAppointments",true);
+			ArrayList<Training> trainings = trainingRepository.findAll();
+			model.addAttribute("trainings", trainings);
+			return "Member";
+		}
+
+		model.addAttribute("reservedAppointments", reservedAppointments);
+
+		return "ReservedAppointments";
 	}
 
 	@PostMapping("removeFromCart")

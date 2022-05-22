@@ -6,4 +6,5 @@ public interface LoyaltyCardService {
     LoyaltyCard requestLoyaltyCard(LoyaltyCard loyaltyCard);
     LoyaltyCard acceptLoyaltyCard(LoyaltyCard loyaltyCard);
     LoyaltyCard rejectLoyaltyCard(LoyaltyCard loyaltyCard);
+    void addPoints(LoyaltyCard loyaltyCard);
 }

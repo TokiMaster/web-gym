@@ -12,4 +12,5 @@ public interface LoyaltyCardRepository {
     void requestLoyaltyCard(LoyaltyCard loyaltyCard);
     void acceptLoyaltyCard(LoyaltyCard loyaltyCard);
     void rejectLoyaltyCard(LoyaltyCard loyaltyCard);
+    void addPoints(LoyaltyCard loyaltyCard);
 }

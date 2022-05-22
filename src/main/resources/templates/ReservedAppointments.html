@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{reservedAppointments}"></title>
+</head>
+<body>
+<style>
+    .tb { border-collapse: collapse; }
+    .tb th, .tb td { padding: 5px; border: solid 1px #777; }
+    .tb th { background-color: lightblue; }
+</style>
+<a href="/logout" th:text="#{logout}"></a><br>
+<a href="/member/profileInfo" th:text="#{myProfile}"></a><br>
+<a href="/" th:text="#{homePage}"></a><br>
+<table class="tb">
+    <caption th:text="#{reservedAppointments}"></caption>
+    <tr>
+        <th th:text="#{table.trainingName}"></th>
+        <th th:text="#{table.trainingInstructor}"></th>
+        <th th:text="#{table.typeOfTraining}"></th>
+        <th th:text="#{table.trainingPrice}"></th>
+<!--        <th th:text="#{table.startDate}"></th>-->
+    </tr>
+    <tr th:each="training : ${reservedAppointments}" >
+        <td th:text="${training.getTraining().getName()}" ></td>
+        <td th:text="${training.getTraining().getInstructor()}"></td>
+        <td th:text="${training.getTraining().getTypeOfTraining().getName()}"></td>
+        <td th:text="${training.getTraining().getPrice()}"></td>
+<!--        <td th:text="${training.getTraining().getStartDate()}"></td>-->
+    </tr>
+</table>
+</body>
+</html>

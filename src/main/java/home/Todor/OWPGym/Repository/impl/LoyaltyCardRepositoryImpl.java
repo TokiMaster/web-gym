@@ -103,5 +103,9 @@ public class LoyaltyCardRepositoryImpl implements LoyaltyCardRepository {
         jdbcTemplate.update(sql, loyaltyCard.getId());
     }
 
-
+    @Override
+    public void addPoints(LoyaltyCard loyaltyCard) {
+        String sql = "update LoyaltyCard set points = ? where id = ?";
+        jdbcTemplate.update(sql, loyaltyCard.getPoints(), loyaltyCard.getId());
+    }
 }

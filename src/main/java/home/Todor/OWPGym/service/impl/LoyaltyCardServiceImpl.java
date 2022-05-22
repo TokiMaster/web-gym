@@ -38,4 +38,9 @@ public class LoyaltyCardServiceImpl implements LoyaltyCardService {
         loyaltyCardRepository.rejectLoyaltyCard(loyaltyCard);
         return loyaltyCard;
     }
+
+    @Override
+    public void addPoints(LoyaltyCard loyaltyCard) {
+        loyaltyCardRepository.addPoints(loyaltyCard);
+    }
 }

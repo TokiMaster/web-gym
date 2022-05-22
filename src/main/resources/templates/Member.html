@@ -9,7 +9,9 @@
 <a th:href="@{?lang=en}" th:text="#{english}"></a><br>
 <a href="/logout" th:text="#{logout}"></a><br>
 <a href="/member/profileInfo" th:text="#{myProfile}"></a><br>
-<a href="/member/loyaltyCard" th:text="#{loyatyCard}"></a>
+<a href="/member/loyaltyCard" th:text="#{loyaltyCard}"></a><br>
+<a href="/member/reservedAppointments" th:text="#{reservedAppointments}"></a>
+
 <h3 th:if="${request}" th:text="#{loyalty.error}"></h3>
 <style>
 	.tb { border-collapse: collapse; }
@@ -35,5 +37,6 @@
 <a href="/member/wishList" th:text="#{wishList}"></a>
 <h3 th:if="${cart}" th:text="#{cart.error}"></h3>
 <h3 th:if="${wishList}" th:text="#{wishList.error}"></h3>
+<h3 th:if="${reservedAppointments}" th:text="#{reservedAppointments.error}"></h3>
 </body>
 </html>
