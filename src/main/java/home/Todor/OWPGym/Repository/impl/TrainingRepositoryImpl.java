@@ -2,8 +2,6 @@ package home.Todor.OWPGym.Repository.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,6 @@ import home.Todor.OWPGym.models.TypeOfTraining;
 
 @Repository
 public class TrainingRepositoryImpl implements TrainingRepository{
-
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -109,8 +106,8 @@ public class TrainingRepositoryImpl implements TrainingRepository{
 	@Override
 	public void addTraining(Training training) {
 		String sql = "insert into Training (name, instructor, description, typeOfTraining, price, "
-				+ "trainingType, trainingLVL, startDate, duration, averageRating)"
-				+ "values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "trainingType, trainingLVL, duration, averageRating)"
+				+ "values ( ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		jdbcTemplate.update(sql, training.getName(), training.getInstructor(), 
 					training.getDescription(), training.getTypeOfTraining().getName(),
 					training.getPrice(), training.getTrainingType().name(),

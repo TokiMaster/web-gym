@@ -65,17 +65,7 @@ public class AdminController {
 			return "redirect:/";
 		}
 
-//		int rating = 0;
-//		double average = 0;
 		ArrayList<Training> trainings = trainingRepository.findAll();
-//		ArrayList<Comment> comments = commentRepository.findAllAcceptedComments(trainingRepository.findOne(id));
-//		for(int i = 0; i < trainings.size(); i++){
-//			for(int j = 0; i < comments.size(); j++){
-//				if(trainings.get(i).getId() == comments.get(j).getTraining().getId() && comments.get(j).getStatus().equals("ACCEPTED")){
-//					rating += comments.get(j).getRating();
-//				}
-//			}
-//		}
 		model.addAttribute("trainings", trainings);
 		return "Admin";
 	}
